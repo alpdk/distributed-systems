@@ -5,26 +5,42 @@ from datetime import datetime, timedelta
 
 # Transform string to timedelta object
 def get_offset(offset: str):
+    # Transform string to datatime
     datetime_obj = datetime.strptime(offset, "%H:%M:%S.%f")
-    total_microsec = datetime_obj.hour + datetime_obj.minute + datetime_obj.second + datetime_obj.microsecond
-    return timedelta(microseconds=total_microsec)
+
+    # Return timedelta object
+    return timedelta(hours=datetime_obj.hour,
+                     minutes=datetime_obj.minute,
+                     seconds=datetime_obj.second,
+                     microseconds=datetime_obj.microsecond)
 
 
 # Run client node
 def run_client(server_ip, server_port):
+    # Open client socket
     client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
+    # Connect socket to specific ip and port
     client.connect((server_ip, server_port))
 
+    # Define zero offset
     offset = timedelta(seconds=0)
 
     try:
         while True:
+            # Create string with current time
             msg = (datetime.now() + offset).strftime("%d/%m/%Y %H:%M:%S")
 
+            # Send current time to server
             client.send(msg.encode("utf-8")[:1024])
 
+            # Receive average offset time and transform it into timedelta object
             clock_time_string = client.recv(1024).decode("utf-8")
+
+            # Check that client still here
+            if clock_time_string == "":
+                return
+
             offset = get_offset(clock_time_string)
 
             if clock_time_string == "":
