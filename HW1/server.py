@@ -73,8 +73,6 @@ def get_average_offset():
     if len(client_data) != 0:
         average_clock_difference = sum_of_clock_difference / len(client_data)
 
-    print(time_difference_list)
-
     return average_clock_difference
 
 
