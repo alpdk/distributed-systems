@@ -27,7 +27,7 @@ def run_client(server_ip, server_port):
     try:
         while True:
             # Create string with current time
-            msg = (datetime.now() - offset).strftime("%d/%m/%Y %H:%M:%S")
+            msg = (datetime.now() + offset).strftime("%d/%m/%Y %H:%M:%S")
 
             # Send current time to server
             client.send(msg.encode("utf-8")[:1024])
@@ -46,7 +46,7 @@ def run_client(server_ip, server_port):
                 return
 
             print("Received offset time:", str(offset),
-                  "\nCurrent time:        ", datetime.now() - offset, end="\n\n")
+                  "\nCurrent time:        ", datetime.now() + offset, end="\n\n")
 
             time.sleep(5)
     except Exception as e:
