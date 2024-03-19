@@ -16,7 +16,7 @@ def client_time(client_socket, addr):
 
             # Check that client still here
             if clock_time_string == "":
-                print(f"Client from {addr[0]}:{addr[1]} is closed", end="\n\n")
+                print(f"Client from {addr[0]}:{addr[1]} is disconnected", end="\n\n")
                 client_data.pop(addr)
                 return
 
@@ -29,7 +29,6 @@ def client_time(client_socket, addr):
                 "connector": client_socket
             }
 
-            print("Client Data updated with: " + str(addr), end="\n\n")
             time.sleep(5)
     except Exception as e:
         print(f"Error when handling client: {e}", end="\n\n")
@@ -65,7 +64,7 @@ def get_average_offset():
                                 in client_data.items())
 
     # Summarize time_difference from every client
-    sum_of_clock_difference = sum(time_difference_list, timedelta(0, 0))
+    sum_of_clock_difference = sum(time_difference_list, timedelta(days=0, microseconds=0))
 
     # Define average_clock_difference
     average_clock_difference = timedelta(0, 0)
@@ -73,6 +72,8 @@ def get_average_offset():
     # Divide sum_of_clock_difference by count of client nodes
     if len(client_data) != 0:
         average_clock_difference = sum_of_clock_difference / len(client_data)
+
+    print(time_difference_list)
 
     return average_clock_difference
 
@@ -84,14 +85,12 @@ def start_change_time():
             # Get average offset
             average_offset = get_average_offset()
 
-            print("Average offset: ", average_offset, end="\n\n")
-            print(datetime.now())
+            print("Average offset: ", average_offset)
+            print("Current time:   ", datetime.now(), end="\n\n")
 
             for client in client_data:
                 # Send average offset to client nodes as a string
                 client_data[client]['connector'].send(str(average_offset).encode("utf-8")[:1024])
-
-                print(f"Send update time for {client[0]}:{client[1]}", end="\n\n")
 
             time.sleep(5)
     except Exception as e:
