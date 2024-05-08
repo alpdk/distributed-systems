@@ -13,13 +13,11 @@ if __name__ == '__main__':
         print('Error: too much arguments')
         sys.exit(1)
 
-    source = pathlib.Path(data[1])
-
     path = pathlib.Path().resolve()
-    destination = os.path.join(path, "users_data", data[0], 'data')
+    path = os.path.join(path, "users_data", data[0], 'data', data[1])
 
     try:
-        shutil.copy(source, destination)
-        print("File copied successfully from", source, "to", destination)
-    except IOError as e:
-        print("Unable to copy file:", e)
+        os.remove(path)  # or use os.unlink(file_path)
+        print("File deleted successfully:", path)
+    except OSError as e:
+        print("Error deleting file:", e)
