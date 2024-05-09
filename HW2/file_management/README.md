@@ -2,17 +2,20 @@
 
 ## How t use *create_user.py* script
 
-This script requires 4 parameters:
+This script requires 2 parameters:
 
 1) User name
 2) Password
-3) User host address *(192.168.0.1 - 192.168.255.254)*
-4) User port address *(more than 5000)*
+
+User host address *(192.168.0.1 - 192.168.255.254)* and 
+User port address *(more than 5000)* 
+generates automatically.
+
 
 Example of exploitation:
 
 ```
-create_user.py user_1 abacaba 192.168.0.1 5000
+create_user.py user_1 abacaba
 ```
 
 ## How t use *delete_user.py* script
