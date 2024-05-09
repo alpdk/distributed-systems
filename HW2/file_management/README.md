@@ -1,6 +1,6 @@
-# How to use scipts
+# How to use scripts
 
-## How t use *create_user.py* srcipt
+## How t use *create_user.py* script
 
 This script requires 4 parameters:
 
@@ -15,7 +15,7 @@ Example of exploitation:
 create_user.py user_1 abacaba 192.168.0.1 5000
 ```
 
-## How t use *delete_user.py* srcipt
+## How t use *delete_user.py* script
 
 This script requires 1 parameters:
 
