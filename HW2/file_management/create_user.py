@@ -70,7 +70,7 @@ if __name__ == '__main__':
     user_name = data[0]
     user_password = data[1]
 
-    path_to_dir = pathlib.Path().resolve()
+    path_to_dir = pathlib.Path().resolve().parent
     path_to_user_folder = os.path.join(path_to_dir, "users_data", user_name)
 
     if not os.path.exists(path_to_user_folder):

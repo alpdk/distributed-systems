@@ -15,7 +15,7 @@ if __name__ == '__main__':
 
     source = pathlib.Path(data[1])
 
-    path = pathlib.Path().resolve()
+    path = pathlib.Path().resolve().parent
     destination = os.path.join(path, "users_data", data[0], 'data')
 
     try:
