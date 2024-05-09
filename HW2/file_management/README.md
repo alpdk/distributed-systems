@@ -35,12 +35,13 @@ delete_user.py user_1
 This script requires 2 parameters:
 
 1) User name
-2) Local path to the file
+2) File name
+3) Local path to the file
 
 Example of exploitation:
 
 ```
-add_file.py user_1 /home/alpdk/Pictures/geas.jpg
+add_file.py user_1 code_geass_wallpaper /home/alpdk/Pictures/geas.jpg
 ```
 
 ## How t use *delete_file.py* script
