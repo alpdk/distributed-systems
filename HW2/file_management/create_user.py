@@ -9,7 +9,7 @@ def get_unique_host_and_port(port_to_sock_path):
     f.close()
 
     if not bool(data_port_to_sock):
-        return "192.168.0.1", 5000
+        return "192.168.0.1", str(5000)
 
     last_port = max(data_port_to_sock.keys())
     last_host = max(data_port_to_sock[last_port])
