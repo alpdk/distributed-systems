@@ -8,24 +8,14 @@ def get_unique_host_and_port(port_to_sock_path):
     data_port_to_sock = json.load(f)
     f.close()
 
+    host = "127.0.0.1"
+
     if not bool(data_port_to_sock):
-        return "192.168.0.1", str(5000)
+        return host, str(5000)
 
-    last_port = max(data_port_to_sock.keys())
-    last_host = max(data_port_to_sock[last_port])
+    port = int(max(data_port_to_sock.keys())) + 1
 
-    res_port = int(last_port)
-    res_host = [int(x) for x in last_host.split(".")]
-
-    res_host[2] = (res_host[3] + 1) // 255
-    res_port += (res_host[3] + 1) // 255
-
-    res_host[3] = (res_host[3] + 1) % 255
-
-    if res_host[3] == 0:
-        res_host[3] += 1
-
-    return ".".join(map(str, res_host)), str(res_port)
+    return host, str(port)
 
 def write_in_port_to_hosts(path_to_dir, host, port):
     port_to_sock_path = os.path.join(path_to_dir, "users_data", "port_to_hosts.json")

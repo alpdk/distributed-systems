@@ -7,7 +7,7 @@ This script requires 2 parameters:
 1) User name
 2) Password
 
-User host address *(192.168.0.1 - 192.168.255.254)* and 
+User host address *always (127.0.0.1)* and 
 User port address *(more than 5000)* 
 generates automatically.
 
@@ -74,6 +74,6 @@ Method return dict if user exist and None if do not.
 Example of exploitation:
 
 ```
-user_info = get_user_info("user_1")
+user_info = get_user_info("user_1a")
 ```
 
