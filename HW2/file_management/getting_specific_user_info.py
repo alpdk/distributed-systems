@@ -15,3 +15,5 @@ def get_user_info(user_name):
         f.close()
 
         return user_data
+
+    return None
