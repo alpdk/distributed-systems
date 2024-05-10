@@ -70,6 +70,12 @@ This method have 1 parameter:
 1) User_name *(String format)*
 
 Method return dict if user exist and None if do not.
+Dictionary contain 4 values:
+
+1) name
+2) password
+3) host
+4) port
 
 Example of exploitation:
 
