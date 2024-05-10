@@ -3,6 +3,7 @@ import sys
 import pathlib
 import shutil
 
+
 if __name__ == '__main__':
     data = sys.argv[1:]
 
@@ -13,11 +14,14 @@ if __name__ == '__main__':
         print('Error: too much arguments')
         sys.exit(1)
 
-    path = pathlib.Path().resolve()
-    path = os.path.join(path, "users_data", data[0], 'data', data[1])
+    user_name = data[0]
+    file_name = data[1]
+
+    path_to_proj_dir = pathlib.Path().resolve().parent
+    path_to_delete_file = os.path.join(path_to_proj_dir, "users_data", user_name, file_name)
 
     try:
-        os.remove(path)  # or use os.unlink(file_path)
-        print("File deleted successfully:", path)
+        shutil.rmtree(path_to_delete_file)
+        print("File deleted successfully:", path_to_delete_file)
     except OSError as e:
         print("Error deleting file:", e)

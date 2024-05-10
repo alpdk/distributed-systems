@@ -1,5 +1,9 @@
+import pathlib
+import subprocess
 from tkinter import *
 import os
+
+from HW2.file_management.getting_specific_user_info import get_user_info
 
 
 class UserAuthentication:
@@ -78,21 +82,20 @@ class UserAuthentication:
         username = self.username_verify.get()
         password = self.password_verify.get()
 
-        # Get list of usernames to check whether this user exists
-        list_of_files = os.listdir()
-        if username in list_of_files:
+        user_info = get_user_info(username)
+        if user_info is None:
+            # User doesn't exist
+            self.user_not_found()
+        else:
             # User exists
-            file1 = open(username, "r")
-            verify = file1.read().splitlines()
-            if password in verify:
+            username_loaded = user_info["name"]
+            password_loaded = user_info["password"]
+            if password == password_loaded:
                 # Correct password
                 self.login_success()
             else:
                 # Wrong password
                 self.password_not_recognised()
-        else:
-            # User doesn't exist
-            self.user_not_found()
 
         self.username_login_entry.delete(0, END)
         self.password_login_entry.delete(0, END)
@@ -110,11 +113,17 @@ class UserAuthentication:
         username = self.username_verify.get()
         password = self.password_verify.get()
 
-        # Write username and password in file 'username'
-        file = open(username, "w")
-        file.write(username + "\n")
-        file.write(password)
-        file.close()
+        try:
+            path_to_dir = pathlib.Path().resolve().parent
+            script_path = os.path.join(path_to_dir, "file_management", "create_user.py")
+            script_args = [username, password]
+            command = ['python', script_path] + script_args
+
+            # Run the command
+            subprocess.run(command, check=True)
+            print("Script executed successfully")
+        except subprocess.CalledProcessError as e:
+            print("Error executing script:", e)
 
     def register_user_found(self):
         self.register_user_found_screen = Toplevel(self.register_screen)
