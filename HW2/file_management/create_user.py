@@ -10,10 +10,31 @@ def get_unique_host_and_port(port_to_sock_path):
 
     host = "127.0.0.1"
 
-    if not bool(data_port_to_sock):
-        return host, str(5000)
+    path_to_proj_dir = pathlib.Path().resolve().parent
+    path_to_user_data = os.path.join(path_to_proj_dir, "users_data")
+    path_to_free_ports = os.path.join(path_to_user_data, "free_ports.json")
 
-    port = int(max(data_port_to_sock.keys())) + 1
+    if os.path.exists(path_to_free_ports):
+        free_ports = {}
+
+        with open(path_to_free_ports, 'r') as file:
+            free_ports = json.load(file)
+
+        if free_ports:
+            port = int(min(free_ports["free"]))
+
+            free_ports["free"].remove(str(port))
+
+            if not free_ports["free"]:
+                del free_ports["free"]
+
+            with open(path_to_free_ports, 'w') as file:
+                json.dump(free_ports, file, indent=4)
+    elif not bool(data_port_to_sock):
+        return host, str(5001)
+    else:
+        port = int(max(data_port_to_sock.keys())) + 1
+
 
     return host, str(port)
 
