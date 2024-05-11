@@ -15,7 +15,6 @@ def get_unique_host_and_port(port_to_sock_path):
     path_to_free_ports = os.path.join(path_to_user_data, "free_ports.json")
 
     if os.path.exists(path_to_free_ports):
-        free_ports = {}
 
         with open(path_to_free_ports, 'r') as file:
             free_ports = json.load(file)
@@ -30,6 +29,9 @@ def get_unique_host_and_port(port_to_sock_path):
 
             with open(path_to_free_ports, 'w') as file:
                 json.dump(free_ports, file, indent=4)
+
+            if not free_ports:
+                os.remove(path_to_free_ports)
     elif not bool(data_port_to_sock):
         return host, str(5001)
     else:

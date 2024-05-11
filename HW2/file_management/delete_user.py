@@ -18,11 +18,9 @@ def add_released_port(port):
         with open(path_to_free_ports, 'r') as file:
             free_ports = json.load(file)
 
-        if "free" in free_ports:
-            free_ports["free"].append(port)
-        else:
-            free_ports["free"] = [port]
-
+        free_ports["free"].append(port)
+    else:
+        free_ports["free"] = [port]
 
     with open(path_to_free_ports, 'w') as file:
         json.dump(free_ports, file, indent=4)
