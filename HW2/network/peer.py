@@ -1,43 +1,44 @@
+import json
+import os
+import pathlib
 import socket
 import threading
 
 
 class Peer:
-    def __init__(self, host, port, broad_cast_host="255.255.255.255", broad_cast_port=5000):
-        self.host = host
-        self.port = port
+    def __init__(self, user_name, server_host="127.0.0.1", server_port=5000):
+        host_and_port = self.get_host_and_port(user_name)
 
-        self.all_ports = []
+        if host_and_port == None:
+            raise Exception("This user does not exist!!!")
 
-        self.broad_cast_host = broad_cast_host
-        self.broad_cast_port = broad_cast_port
+        self.user_name = user_name
 
-        self.socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
-        self.socket.bind((self.host, self.port))
+        self.host = host_and_port[0]
+        self.port = host_and_port[1]
 
-        self.stop_flag = threading.Event()
+        self.server_host = server_host
+        self.server_port = server_port
 
-    def file_request(self, file_name):
-        if self.stop_flag.is_set():
-            return
+        self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        # self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
+        self.sock.bind((self.host, self.port))
 
-        file_name_bytes = file_name.encode('utf-8')
+        self.server_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.server_sock.connect((self.server_host, self.server_port))
 
-        self.socket.sendto(file_name_bytes, (self.broad_cast_host, self.broad_cast_port))
-        print(self.broad_cast_host, self.broad_cast_port)
+        self.server_sock.send(self.user_name.encode("utf-8")[:1024])
 
-    def listening_request(self):
-        while not self.stop_flag.is_set():
-            data, addr = self.socket.recvfrom(1024)
+    def get_host_and_port(self, user_name):
+        path_to_proj_dir = pathlib.Path().resolve().parent
+        path_to_user = os.path.join(path_to_proj_dir, "users_data", user_name)
 
-            print(f"Received broadcast message: {data.decode('utf-8')} from {addr}")
+        if os.path.exists(path_to_user):
+            path_to_user_info = os.path.join(path_to_user, "user_info.json")
 
-    def start(self):
-        self.stop_flag.clear()
+            with open(path_to_user_info, 'r') as file:
+                user_info = json.load(file)
 
-        listening_broad_cast_request = threading.Thread(target=self.listening_request, args=())
-        listening_broad_cast_request.start()
+            return user_info["host"], int(user_info["port"])
 
-    def stop(self):
-        self.stop_flag.set()
+        return None
