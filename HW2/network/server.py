@@ -1,5 +1,9 @@
+import json
+import os
+import pathlib
 import socket
 import threading
+import time
 
 clients = {}
 
@@ -12,19 +16,30 @@ class Server:
         self.connected_port = ()
 
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        # self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
         self.sock.bind((self.host, self.port))
+
+    def get_host_and_port(self, user_name):
+        path_to_proj_dir = pathlib.Path().resolve().parent
+        path_to_user = os.path.join(path_to_proj_dir, "users_data", user_name)
+
+        if os.path.exists(path_to_user):
+            path_to_user_info = os.path.join(path_to_user, "user_info.json")
+
+            with open(path_to_user_info, 'r') as file:
+                user_info = json.load(file)
+
+            return user_info["host"], int(user_info["port"])
+
+        return None
 
     def make_broad_cast_request(self, file_name, client_name):
         users_who_have_file = ""
 
-        for user in clients.keys():
-            if user == client_name:
-                continue
+        users = list(clients.keys())
+        users.remove(client_name)
 
-            ask_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            ask_sock.connect((clients[user]["host"], clients[user]["port"]))
-            ask_sock.send(file_name.encode("utf-8"))
+        for user in users:
+            clients[user]["ask_sock"].send(file_name.encode("utf-8"))
 
             have_file = self.sock.recv(1024).decode("utf-8")
 
@@ -45,12 +60,10 @@ class Server:
 
                 useful_users = self.make_broad_cast_request(requested_file, client_name)
 
-                sock_sender = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-                sock_sender.connect((clients[client_name]["host"], clients[client_name]["port"]))
-                sock_sender.send(useful_users[:1024].encode("utf-8"))
+                clients[client_name]["ask_sock"].send(useful_users[:1024].encode("utf-8"))
 
         except Exception as e:
-            print(f"Error when handling client: {e}", end="\n\n")
+            print(f"Error: {e}", end="\n\n")
         finally:
             if client_name in clients.keys():
                 clients.pop(client_name)
@@ -63,12 +76,19 @@ class Server:
 
                 client_name = client_socket.recv(1024).decode("utf-8")
 
+                user_info = self.get_host_and_port(client_name)
+
                 clients[client_name] = {}
                 clients[client_name]["sock"] = client_socket
-                clients[client_name]["host"] = addr[0]
-                clients[client_name]["port"] = addr[1]
+                clients[client_name]["host"] = user_info[0]
+                clients[client_name]["port"] = user_info[1]
 
                 print(f"Accepted connection from user {client_name} with address {addr[0]}:{addr[1]}", end="\n\n")
+
+                time.sleep(2)
+
+                clients[client_name]["ask_sock"] = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                clients[client_name]["ask_sock"].connect((clients[client_name]["host"], clients[client_name]["port"]))
 
                 request_file_threads = threading.Thread(target=self.listen_requested_file,
                                                         args=(client_socket, addr, client_name))
@@ -80,7 +100,10 @@ class Server:
             self.sock.close()
 
     def start(self):
-        self.sock.listen()
+        try:
+            self.sock.listen(5)
 
-        accept_threads = threading.Thread(target=self.accept_client, args=())
-        accept_threads.start()
+            accept_threads = threading.Thread(target=self.accept_client, args=())
+            accept_threads.start()
+        except Exception as e:
+            print(f"Error: {e}", end="\n\n")
