@@ -2,7 +2,7 @@ import os
 import pathlib
 import subprocess
 import tkinter as tk
-from tkinter import ttk
+from tkinter import ttk, filedialog, messagebox
 
 from HW2.file_management.getting_specific_user_info import get_user_info
 
@@ -16,6 +16,8 @@ light_gray_color = '#526069'
 class AP2P(tk.Tk):
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
+
+        self.username = tk.StringVar()
 
         # ------------- BASIC APP LAYOUT -----------------
 
@@ -55,12 +57,12 @@ class AP2P(tk.Tk):
         # # SUBMENU 1
         self.submenu_frame = tk.Frame(self.sidebar, bg=sidebar_color)
         self.submenu_frame.place(relx=0, rely=0.1, relwidth=1, relheight=0.9)
-        submenu1 = SidebarSubMenu(self.submenu_frame,
-                                  sub_menu_heading='User Authorization',
-                                  sub_menu_options=["Login",
+        submenu1 = AuthSidebarSubMenu(self.submenu_frame,
+                                      sub_menu_heading='User Authorization',
+                                      sub_menu_options=["Login",
                                                     "Register",
                                                     ]
-                                  )
+                                      )
         submenu1.options["Login"].config(
             command=lambda: self.show_frame(LoginPage)
         )
@@ -147,16 +149,16 @@ class LoginPage(tk.Frame):
                 self.user_not_found()
             else:
                 # User exists
-                username_loaded = user_info["name"]
                 password_loaded = user_info["password"]
                 if password == password_loaded:
                     # Correct password
-                    self.login_success()
+                    self.login_success(username)
                 else:
                     # Wrong password
                     self.password_not_recognised()
 
-    def login_success(self):
+    def login_success(self, username):
+        self.controller.username.set(username)
         self.controller.show_frame(ProfilePage)
 
     def password_not_recognised(self):
@@ -273,8 +275,7 @@ class SignupPage(tk.Frame):
         password = self.password_verify.get()
 
         try:
-            path_to_dir = pathlib.Path().resolve().parent
-            script_path = os.path.join(path_to_dir, "file_management", "create_user.py")
+            script_path = os.path.join(self.controller.path_to_dir, "file_management", "create_user.py")
             script_args = [username, password]
             command = ['python', script_path] + script_args
 
@@ -329,18 +330,124 @@ class SignupPage(tk.Frame):
 
 class ProfilePage(tk.Frame):
     def __init__(self, parent, controller):
+        self.parent = parent
+        self.controller = controller
+
         tk.Frame.__init__(self, parent)
 
         self.config(bg='white')
 
-        label = tk.Label(self, text="Profile Page", bg='white')
-        label.place(relx=0.5, rely=0.35, anchor="center")
+        label = tk.Label(self, textvariable=self.controller.username, bg='white', font=("", 10))
+        label.place(relx=0.5, rely=0.075, relwidth=0.2, relheight=0.1, anchor="center")
 
-        # button1 = ttk.Button(self, text="AuthPage", command=lambda: controller.show_frame(UserAuthPage))
-        # button1.place(relx=0.5, rely=0.65, anchor="center")
+        self.logout_button = tk.Button(self, text="Logout", font=("", 5), bg=header_color, fg='white',
+                                       activebackground=header_shadow_color, activeforeground='white',
+                                       command=self.logout)
+        self.logout_button.place(relx=0.43, rely=0.15, relwidth=0.15, anchor="center")
+
+        self.delete_account_button = tk.Button(self, text="Delete account", font=("", 5), bg=header_color, fg='white',
+                                               activebackground=header_shadow_color, activeforeground='white',
+                                               command=self.delete_account)
+        self.delete_account_button.place(relx=0.57, rely=0.15, relwidth=0.15, anchor="center")
+
+        self.uploaded_files = []
+
+        self.file_listbox = tk.Listbox(self, selectmode=tk.MULTIPLE)
+        self.file_listbox.place(relx=0.5, rely=0.5, relheight=0.5, relwidth=0.3, anchor="center")
+
+        self.upload_button = tk.Button(self, text="Upload File", font=("", 5), bg=header_color, fg='white',
+                                       activebackground=header_shadow_color, activeforeground='white',
+                                       command=self.upload_file)
+        self.upload_button.place(relx=0.4, rely=0.8, relwidth=0.09, anchor="center")
+
+        self.download_button = tk.Button(self, text="Download", font=("", 5), bg=header_color, fg='white',
+                                         activebackground=header_shadow_color, activeforeground='white',
+                                         command=self.download_files)
+        self.download_button.place(relx=0.5, rely=0.8, relwidth=0.09, anchor="center")
+
+        self.delete_button = tk.Button(self, text="Delete", font=("", 5), bg=header_color, fg='white',
+                                       activebackground=header_shadow_color, activeforeground='white',
+                                       command=self.delete_files)
+        self.delete_button.place(relx=0.6, rely=0.8, relwidth=0.09, anchor="center")
+
+    def logout(self):
+        self.controller.show_frame(WelcomePage)
+        self.controller.username.set("")
+
+    def delete_account(self):
+        try:
+            script_path = os.path.join(self.controller.path_to_dir, "file_management", "delete_user.py")
+            script_args = [self.controller.username.get()]
+            command = ['python', script_path] + script_args
+
+            # Run the command
+            subprocess.run(command, check=True)
+            print("Script executed successfully")
+        except subprocess.CalledProcessError as e:
+            print("Error executing script:", e)
+        self.controller.show_frame(WelcomePage)
+        self.controller.username.set("")
 
 
-class SidebarSubMenu(tk.Frame):
+    def upload_file(self):
+        file_path = filedialog.askopenfilename()
+        if file_path:
+            filename = os.path.basename(file_path)
+            if filename in self.uploaded_files:
+                messagebox.showinfo("Error", "File already uploaded.")
+                return
+            self.uploaded_files.append(filename)
+            self.update_file_listbox()
+            try:
+                script_path = os.path.join(self.controller.path_to_dir, "file_management", "add_file.py")
+                script_args = [self.controller.username.get(), filename, file_path]
+                command = ['python', script_path] + script_args
+
+                # Run the command
+                subprocess.run(command, check=True)
+                print("Script executed successfully")
+            except subprocess.CalledProcessError as e:
+                print("Error executing script:", e)
+
+    def update_file_listbox(self):
+        self.file_listbox.delete(0, tk.END)
+        for file_path in self.uploaded_files:
+            self.file_listbox.insert(tk.END, file_path)
+
+    def download_files(self):
+        selected_indices = self.file_listbox.curselection()
+        if not selected_indices:
+            messagebox.showinfo("Error", "No files selected.")
+            return
+
+        for index in selected_indices:
+            file_path = self.uploaded_files[index]
+            # Implement download functionality here
+            print("Downloading:", file_path)
+
+    def delete_files(self):
+        selected_indices = self.file_listbox.curselection()
+        if not selected_indices:
+            messagebox.showinfo("Error", "No files selected.")
+            return
+
+        for index in selected_indices[::-1]:
+            try:
+                script_path = os.path.join(self.controller.path_to_dir, "file_management", "delete_file.py")
+                script_args = [self.controller.username.get(), self.uploaded_files[index]]
+                command = ['python', script_path] + script_args
+
+                # Run the command
+                subprocess.run(command, check=True)
+                print("Script executed successfully")
+            except subprocess.CalledProcessError as e:
+                print("Error executing script:", e)
+            del self.uploaded_files[index]
+
+        self.update_file_listbox()
+
+
+class AuthSidebarSubMenu(tk.Frame):
     def __init__(self, parent, sub_menu_heading, sub_menu_options):
         tk.Frame.__init__(self, parent)
         self.config(bg=sidebar_color)
