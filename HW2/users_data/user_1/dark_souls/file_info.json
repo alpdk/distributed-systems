@@ -1,0 +1,375 @@
+{
+    "dark_souls_1": {
+        "checksum": "fd9f09a8d9b3b4a89ab4213e2f698a08",
+        "part": 1
+    },
+    "dark_souls_2": {
+        "checksum": "6b431bf2da7c9312b3e5c21e67f6591b",
+        "part": 2
+    },
+    "dark_souls_3": {
+        "checksum": "6b431bf2da7c9312b3e5c21e67f6591b",
+        "part": 3
+    },
+    "dark_souls_4": {
+        "checksum": "6b431bf2da7c9312b3e5c21e67f6591b",
+        "part": 4
+    },
+    "dark_souls_5": {
+        "checksum": "5a9f6dd53b474c24cd70b3635b636e74",
+        "part": 5
+    },
+    "dark_souls_6": {
+        "checksum": "c559f54e11219edfe500a0d7a6f9dcda",
+        "part": 6
+    },
+    "dark_souls_7": {
+        "checksum": "09f48680f238589230b736ca699673a9",
+        "part": 7
+    },
+    "dark_souls_8": {
+        "checksum": "e5c2542a1e67014311a5effd5e82728a",
+        "part": 8
+    },
+    "dark_souls_9": {
+        "checksum": "642f898cffa9613f2c61ffac82a3faa3",
+        "part": 9
+    },
+    "dark_souls_10": {
+        "checksum": "0be8cf3c90c84598d7d41d7923ed7321",
+        "part": 10
+    },
+    "dark_souls_11": {
+        "checksum": "9a2bb9d232c96e9b675d2af20116e871",
+        "part": 11
+    },
+    "dark_souls_12": {
+        "checksum": "933599736718d312e7351a33bc1f423b",
+        "part": 12
+    },
+    "dark_souls_13": {
+        "checksum": "3df2c5a0e7122095c2eae6cef273274c",
+        "part": 13
+    },
+    "dark_souls_14": {
+        "checksum": "12e11205e3bb3b4a27d934cccc18d129",
+        "part": 14
+    },
+    "dark_souls_15": {
+        "checksum": "506dc6d16f6ba22884ed3f163cb40faf",
+        "part": 15
+    },
+    "dark_souls_16": {
+        "checksum": "22b84f91a57d0d6b11e4fd13ea15ded4",
+        "part": 16
+    },
+    "dark_souls_17": {
+        "checksum": "e84a3845098e2961c216c497c6d93bb7",
+        "part": 17
+    },
+    "dark_souls_18": {
+        "checksum": "3bff85b3b53f6031ec8a103094ad525f",
+        "part": 18
+    },
+    "dark_souls_19": {
+        "checksum": "4765e661062812b7871766fac887f53a",
+        "part": 19
+    },
+    "dark_souls_20": {
+        "checksum": "e5d20b142c3a04238c9d8ed006373d98",
+        "part": 20
+    },
+    "dark_souls_21": {
+        "checksum": "441202f914f394e8dcc974bd3037ec49",
+        "part": 21
+    },
+    "dark_souls_22": {
+        "checksum": "a1f88ecee35a62f096f9f583ae525093",
+        "part": 22
+    },
+    "dark_souls_23": {
+        "checksum": "89a74313294e50edead0f2ee1141472a",
+        "part": 23
+    },
+    "dark_souls_24": {
+        "checksum": "1a3580c0137f0f4b12df02e3e2036003",
+        "part": 24
+    },
+    "dark_souls_25": {
+        "checksum": "5f68a3068a909a3f959d5c52fee524b4",
+        "part": 25
+    },
+    "dark_souls_26": {
+        "checksum": "e329b76d3ba18c92da73af5bae6f340b",
+        "part": 26
+    },
+    "dark_souls_27": {
+        "checksum": "219cbcace65e92b0bb454823ddabfd8f",
+        "part": 27
+    },
+    "dark_souls_28": {
+        "checksum": "457bff636f70b6018e38e58042db1c7d",
+        "part": 28
+    },
+    "dark_souls_29": {
+        "checksum": "29aef5c41e7a8233b846e942de9aa966",
+        "part": 29
+    },
+    "dark_souls_30": {
+        "checksum": "1b74a954db321c9b20c7f08ff11c0a10",
+        "part": 30
+    },
+    "dark_souls_31": {
+        "checksum": "713f4b7abb372ddd8a51e64df2042c64",
+        "part": 31
+    },
+    "dark_souls_32": {
+        "checksum": "540e4409c023895917469de7be39ffec",
+        "part": 32
+    },
+    "dark_souls_33": {
+        "checksum": "a6f87ceee99e2fb670251fb7c356f88d",
+        "part": 33
+    },
+    "dark_souls_34": {
+        "checksum": "efe9635fe15ab0ffff15299b24ef2e4d",
+        "part": 34
+    },
+    "dark_souls_35": {
+        "checksum": "2b4d7dd155d4df3650f97b48aa2c508e",
+        "part": 35
+    },
+    "dark_souls_36": {
+        "checksum": "c10878c9d65aa16378ce124c5fa7e042",
+        "part": 36
+    },
+    "dark_souls_37": {
+        "checksum": "4dbe467fad795df20eff7a4a46385a48",
+        "part": 37
+    },
+    "dark_souls_38": {
+        "checksum": "68621580c240d4099f94b5236b53cff4",
+        "part": 38
+    },
+    "dark_souls_39": {
+        "checksum": "89830581909b126c2125609105b034a4",
+        "part": 39
+    },
+    "dark_souls_40": {
+        "checksum": "762210299c6967ff41c23140a6ff4777",
+        "part": 40
+    },
+    "dark_souls_41": {
+        "checksum": "c9d2a95a229638d547f56810f9be9c2f",
+        "part": 41
+    },
+    "dark_souls_42": {
+        "checksum": "239416c1e71c48bd759e8cfd666c2510",
+        "part": 42
+    },
+    "dark_souls_43": {
+        "checksum": "361d1044c9a56b6db52cd89ba9ba79e7",
+        "part": 43
+    },
+    "dark_souls_44": {
+        "checksum": "1a726b5c41ebc5c89f7dc9696a13b28b",
+        "part": 44
+    },
+    "dark_souls_45": {
+        "checksum": "0b68eb444a1e137e6c3a80c93371956a",
+        "part": 45
+    },
+    "dark_souls_46": {
+        "checksum": "20c46d2fee328462baff80fdd0b5845f",
+        "part": 46
+    },
+    "dark_souls_47": {
+        "checksum": "0a53d8e222dc9a8b1192730841e7239d",
+        "part": 47
+    },
+    "dark_souls_48": {
+        "checksum": "828f9a1d9404c2a771683b8d7156b5b2",
+        "part": 48
+    },
+    "dark_souls_49": {
+        "checksum": "41c03a564756b18351fe9f41a4d873d5",
+        "part": 49
+    },
+    "dark_souls_50": {
+        "checksum": "c0577a481c724b759ae2031d15c3ed76",
+        "part": 50
+    },
+    "dark_souls_51": {
+        "checksum": "790355feb07a2136b9fd82b2968e873d",
+        "part": 51
+    },
+    "dark_souls_52": {
+        "checksum": "7457e1071e5ea6468257f47192fd234a",
+        "part": 52
+    },
+    "dark_souls_53": {
+        "checksum": "47dca6b78c8cd4620c33d021d80c6ca9",
+        "part": 53
+    },
+    "dark_souls_54": {
+        "checksum": "332a227b63c4ec0cae985b3a7728834d",
+        "part": 54
+    },
+    "dark_souls_55": {
+        "checksum": "151cffcb96ba1608c3f4d9e859142efb",
+        "part": 55
+    },
+    "dark_souls_56": {
+        "checksum": "9274f8389795fc28faa20cee25814b47",
+        "part": 56
+    },
+    "dark_souls_57": {
+        "checksum": "1bbde1555edbc19c489837440f481e8d",
+        "part": 57
+    },
+    "dark_souls_58": {
+        "checksum": "fb04d8078065b28eaf63d7f49b654aae",
+        "part": 58
+    },
+    "dark_souls_59": {
+        "checksum": "90449ddc529e97b173d852c7c950f83a",
+        "part": 59
+    },
+    "dark_souls_60": {
+        "checksum": "2c7ef7363edd876bf2e3be374980ff63",
+        "part": 60
+    },
+    "dark_souls_61": {
+        "checksum": "fbfdb8233dc94a717452bebbd60c3b84",
+        "part": 61
+    },
+    "dark_souls_62": {
+        "checksum": "69b394530a5e2cf4dad043e4ecbfde45",
+        "part": 62
+    },
+    "dark_souls_63": {
+        "checksum": "47e14e90e41ea572d56b06b1fc2e3dc6",
+        "part": 63
+    },
+    "dark_souls_64": {
+        "checksum": "992870ec0b5ec81214212d811babe461",
+        "part": 64
+    },
+    "dark_souls_65": {
+        "checksum": "21def5b9fa281ecf969bedf6e9d57017",
+        "part": 65
+    },
+    "dark_souls_66": {
+        "checksum": "a4aae3eab1deaffa269c94c0a58251b9",
+        "part": 66
+    },
+    "dark_souls_67": {
+        "checksum": "4ea29250e5d8b47b6589f61030a4207d",
+        "part": 67
+    },
+    "dark_souls_68": {
+        "checksum": "da93bd6621576a858fb49aff2faa3b70",
+        "part": 68
+    },
+    "dark_souls_69": {
+        "checksum": "15aceaf73e528c639ebd58f7ace1a58b",
+        "part": 69
+    },
+    "dark_souls_70": {
+        "checksum": "a347ed90bad46af3598e3a2136ff6151",
+        "part": 70
+    },
+    "dark_souls_71": {
+        "checksum": "c06fc1eab9c39d66eae8294eed694be0",
+        "part": 71
+    },
+    "dark_souls_72": {
+        "checksum": "f276548044e04982452024aa3324a5fa",
+        "part": 72
+    },
+    "dark_souls_73": {
+        "checksum": "02cb598ddd08738e03720065c4c035e3",
+        "part": 73
+    },
+    "dark_souls_74": {
+        "checksum": "22a84520ddbf9c5684b914fd58c877e1",
+        "part": 74
+    },
+    "dark_souls_75": {
+        "checksum": "d00d694e600b3df1821a298e08c67fd8",
+        "part": 75
+    },
+    "dark_souls_76": {
+        "checksum": "511c6b81ee8622cf433a47264025f2e3",
+        "part": 76
+    },
+    "dark_souls_77": {
+        "checksum": "1e8d28f6774dd1ec003154239c63d251",
+        "part": 77
+    },
+    "dark_souls_78": {
+        "checksum": "e4d2cb0cd088ea522202de9410cf9e9f",
+        "part": 78
+    },
+    "dark_souls_79": {
+        "checksum": "f47eeea095381f29dd42727391e3ff19",
+        "part": 79
+    },
+    "dark_souls_80": {
+        "checksum": "8effdfc5bec781a7ff768213f7e31d23",
+        "part": 80
+    },
+    "dark_souls_81": {
+        "checksum": "4fd423e127ab4c6df30a0be8ea93988a",
+        "part": 81
+    },
+    "dark_souls_82": {
+        "checksum": "062e5af3ac8bf9ad776dd06be9559c21",
+        "part": 82
+    },
+    "dark_souls_83": {
+        "checksum": "6b145013d70c0bf2c0b1fdf9e96b32f2",
+        "part": 83
+    },
+    "dark_souls_84": {
+        "checksum": "d8db8b620432317b1db8ee1ecad964e0",
+        "part": 84
+    },
+    "dark_souls_85": {
+        "checksum": "b6fb22c97d1055ac5a080c6944eeede8",
+        "part": 85
+    },
+    "dark_souls_86": {
+        "checksum": "bf4c32abd50521ccf607a4efb2d8c7f9",
+        "part": 86
+    },
+    "dark_souls_87": {
+        "checksum": "9cd469d8321ea3dc47ddbbf3b8049d87",
+        "part": 87
+    },
+    "dark_souls_88": {
+        "checksum": "4ce68ba961f59857aaeb5a36a7c001ed",
+        "part": 88
+    },
+    "dark_souls_89": {
+        "checksum": "522a8b17f44f398cdd8462655e3c7ca7",
+        "part": 89
+    },
+    "dark_souls_90": {
+        "checksum": "622a2ce857a90f2f592f2b72434d3669",
+        "part": 90
+    },
+    "dark_souls_91": {
+        "checksum": "6b431bf2da7c9312b3e5c21e67f6591b",
+        "part": 91
+    },
+    "dark_souls_92": {
+        "checksum": "6b431bf2da7c9312b3e5c21e67f6591b",
+        "part": 92
+    },
+    "dark_souls_93": {
+        "checksum": "eefaa4016c0133df0493a3c549545b53",
+        "part": 93
+    },
+    "extension": ".png"
+}
