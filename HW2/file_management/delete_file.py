@@ -3,7 +3,6 @@ import sys
 import pathlib
 import shutil
 
-
 if __name__ == '__main__':
     data = sys.argv[1:]
 

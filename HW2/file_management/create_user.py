@@ -3,31 +3,42 @@ import sys
 import json
 import pathlib
 
-
 def get_unique_host_and_port(port_to_sock_path):
     f = open(port_to_sock_path, "r")
     data_port_to_sock = json.load(f)
     f.close()
 
-    if not bool(data_port_to_sock):
-        return "192.168.0.1", str(5000)
+    host = "127.0.0.1"
 
-    last_port = max(data_port_to_sock.keys())
-    last_host = max(data_port_to_sock[last_port])
+    path_to_proj_dir = pathlib.Path().resolve().parent
+    path_to_user_data = os.path.join(path_to_proj_dir, "users_data")
+    path_to_free_ports = os.path.join(path_to_user_data, "free_ports.json")
 
-    res_port = int(last_port)
-    res_host = [int(x) for x in last_host.split(".")]
+    if os.path.exists(path_to_free_ports):
 
-    res_host[2] = (res_host[3] + 1) // 255
-    res_port += (res_host[3] + 1) // 255
+        with open(path_to_free_ports, 'r') as file:
+            free_ports = json.load(file)
 
-    res_host[3] = (res_host[3] + 1) % 255
+        if free_ports:
+            port = int(min(free_ports["free"]))
 
-    if res_host[3] == 0:
-        res_host[3] += 1
+            free_ports["free"].remove(str(port))
 
-    return ".".join(map(str, res_host)), str(res_port)
+            if not free_ports["free"]:
+                del free_ports["free"]
 
+            with open(path_to_free_ports, 'w') as file:
+                json.dump(free_ports, file, indent=4)
+
+            if not free_ports:
+                os.remove(path_to_free_ports)
+    elif not bool(data_port_to_sock):
+        return host, str(5001)
+    else:
+        port = int(max(data_port_to_sock.keys())) + 1
+
+
+    return host, str(port)
 
 def write_in_port_to_hosts(path_to_dir, host, port):
     port_to_sock_path = os.path.join(path_to_dir, "users_data", "port_to_hosts.json")
@@ -48,7 +59,6 @@ def write_in_port_to_hosts(path_to_dir, host, port):
     with open(str(port_to_sock_path), "w") as json_file:
         json.dump(data_port_to_sock, json_file, indent=4)
 
-
 def write_user_info(path_to_dir, user_name, user_password, host, port):
     user_info_path = os.path.join(path_to_dir, "users_data", user_name, "user_info.json")
 
@@ -59,7 +69,6 @@ def write_user_info(path_to_dir, user_name, user_password, host, port):
 
     with open(str(user_info_path), "w") as json_file:
         json.dump(user_info, json_file, indent=4)
-
 
 if __name__ == '__main__':
     data = sys.argv[1:]

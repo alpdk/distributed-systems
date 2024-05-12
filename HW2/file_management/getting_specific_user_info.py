@@ -3,7 +3,6 @@ import sys
 import json
 import pathlib
 
-
 def get_user_info(user_name):
     path_to_dir = pathlib.Path().resolve().parent
     path_to_user_folder = os.path.join(path_to_dir, "users_data", user_name)

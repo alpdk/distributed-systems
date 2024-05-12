@@ -7,6 +7,25 @@ import shutil
 from getting_specific_user_info import get_user_info
 
 
+def add_released_port(port):
+    path_to_proj_dir = pathlib.Path().resolve().parent
+    path_to_user_data = os.path.join(path_to_proj_dir, "users_data")
+    path_to_free_ports = os.path.join(path_to_user_data, "free_ports.json")
+
+    free_ports = {}
+
+    if os.path.exists(path_to_free_ports):
+        with open(path_to_free_ports, 'r') as file:
+            free_ports = json.load(file)
+
+        free_ports["free"].append(port)
+    else:
+        free_ports["free"] = [port]
+
+    with open(path_to_free_ports, 'w') as file:
+        json.dump(free_ports, file, indent=4)
+
+
 def del_user_port_and_host(port_to_sock_path, host, port):
     f = open(port_to_sock_path, "r")
     data_port_to_sock = json.load(f)
@@ -17,6 +36,8 @@ def del_user_port_and_host(port_to_sock_path, host, port):
 
         if not data_port_to_sock[port]:
             del data_port_to_sock[port]
+
+        add_released_port(port)
 
         with open(str(port_to_sock_path), "w") as json_file:
             json.dump(data_port_to_sock, json_file, indent=4)
