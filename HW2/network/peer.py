@@ -3,6 +3,7 @@ import os
 import pathlib
 import socket
 import threading
+import time
 
 
 class Peer:
@@ -24,10 +25,17 @@ class Peer:
         # self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
         self.sock.bind((self.host, self.port))
 
-        self.server_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.server_sock.connect((self.server_host, self.server_port))2
+        self.request_server_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.request_server_sock.connect((self.server_host, self.server_port))
 
-        self.server_sock.send(self.user_name.encode("utf-8")[:1024])
+        time.sleep(1)
+
+        self.request_server_sock.send(self.user_name.encode("utf-8")[:1024])
+
+        time.sleep(1)
+
+        self.broadcast_server_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.broadcast_server_sock.connect((self.server_host, self.server_port))
 
     def get_host_and_port(self, user_name):
         path_to_proj_dir = pathlib.Path().resolve().parent
@@ -43,45 +51,50 @@ class Peer:
 
         return None
 
-    def request_file_threads(self, server_socket, addr):
+    def request_file_threads(self):
         try:
             while True:
-                file_name = server_socket.recv(1024).decode("utf-8")
+                file_name = self.broadcast_server_sock.recv(1024).decode("utf-8")
 
                 path_to_proj_dir = pathlib.Path().resolve().parent
                 path_to_file_dir = os.path.join(path_to_proj_dir, "users_data", self.user_name, file_name)
-
-                print(str(path_to_file_dir))
 
                 if os.path.exists(path_to_file_dir):
                     res = "1"
                 else:
                     res = "0"
 
-                self.server_sock.send(res.encode("utf-8")[:1024])
+                time.sleep(1)
+
+                self.broadcast_server_sock.send(res.encode("utf-8")[:1024])
+
+                time.sleep(5)
         except Exception as e:
             print(f"Error: {e}", end="\n\n")
         finally:
-            server_socket.close()
+            self.request_server_sock.close()
 
     def request_file(self, file_name):
-        self.server_sock.send(file_name.encode("utf-8")[:1024])
+        time.sleep(1)
+        self.request_server_sock.send(file_name.encode("utf-8")[:1024])
+        time.sleep(1)
 
     def start(self):
         try:
-            self.sock.listen(5)
-
-            server_socket, addr = self.sock.accept()
-
-            print(f"Accepted connection from server with address {addr[0]}:{addr[1]}", end="\n\n")
-
             request_file_threads = threading.Thread(target=self.request_file_threads,
-                                                    args=(server_socket, addr))
+                                                    args=())
             request_file_threads.start()
 
             while True:
                 file_name = input("What file you search: ")
-                print(f"Users with this file: {self.request_file(file_name)}")
+
+                self.request_file(file_name)
+
+                time.sleep(3)
+
+                user_names = self.request_server_sock.recv(1024).decode("utf-8")
+
+                print(f"Users with this file: {user_names}")
         except Exception as e:
             print(f"Error: {e}", end="\n\n")
         finally:
