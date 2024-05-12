@@ -38,6 +38,9 @@ class Server:
         users = list(clients.keys())
 
         for user in users:
+            if user == client_name:
+                continue
+
             time.sleep(1)
 
             clients[user]["broadcast"].send(file_name[:1024].encode("utf-8"))
@@ -48,9 +51,9 @@ class Server:
 
             if have_file == "1":
                 if users_who_have_file == "No one":
-                    users_who_have_file = user
+                    users_who_have_file = clients[user]["host"] + ":" + str(clients[user]["port"])
                 else:
-                    users_who_have_file += " " + user
+                    users_who_have_file += " " + clients[user]["host"] + ":" + str(clients[user]["port"])
 
         return users_who_have_file
 
