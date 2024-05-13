@@ -34,11 +34,14 @@ def save_file(local_path_to_file, path_to_file_dir, file_name):
 
             counter += 1
 
+        counter -= 1
+
         path_to_json_info = os.path.join(path_to_file_dir, "file_info.json")
 
         file_extension = os.path.splitext(local_path_to_file)[1]
 
         data_json_files_info["extension"] = file_extension
+        data_json_files_info["part_counts"] = counter
 
         with open(str(path_to_json_info), "w") as json_file:
             json.dump(data_json_files_info, json_file, indent=4)

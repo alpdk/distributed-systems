@@ -216,7 +216,7 @@ class Peer:
                 users_with_file = self.request_server_sock.recv(1024).decode("utf-8")
 
                 if users_with_file == "No one":
-                    print(f"Nobody have file")
+                    print(f"Nobody hos file")
                     continue
 
                 addresses = self.transpose_string_to_list(users_with_file)
