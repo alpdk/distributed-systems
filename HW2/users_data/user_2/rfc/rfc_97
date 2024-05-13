@@ -1,0 +1,18 @@
+   numbers in the sequence space, the numbers occupied by a segment are
+    "busy" or "in use" until MSL seconds have passed, upon crashing a
+    block of space-time is occupied by the octets of the last emitted
+    segment, if a new connection is started too soon and uses any of the
+    sequence numbers in the space-time footprint of the last segment of
+    the previous connection incarnation, there is a potential sequence
+    number overlap area which could cause confusion at the receiver.
+
+3.4.  Establishing a connection
+
+  The "three-way handshake" is the procedure used to establish a
+  connection.  This procedure normally is initiated by one TCP and
+  responded to by another TCP.  The procedure also works if two TCP
+  simultaneously initiate the procedure.  When simultaneous attempt
+  occurs, each TCP receives a "SYN" segment which carries no
+  acknowledgment after it has sent a "SYN".  Of course, the arrival of
+  an old duplicate "SYN" segment can potentially make it appear, to the
+  recipient, that a s

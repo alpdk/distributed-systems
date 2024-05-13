@@ -1,0 +1,17 @@
+ample, both sides of the
+        connection might try to do SENDs before doing any RECEIVEs) and
+        offers poor performance, so it is not recommended.  A more
+        sophisticated implementation would return immediately to allow
+        the process to run concurrently with network I/O, and,
+        furthermore, to allow multiple SENDs to be in progress.
+        Multiple SENDs are served in first come, first served order, so
+        the TCP will queue those it cannot service immediately.
+
+        We have implicitly assumed an asynchronous user interface in
+        which a SEND later elicits some kind of SIGNAL or
+        pseudo-interrupt from the serving TCP.  An alternative is to
+        return a response immediately.  For instance, SENDs might return
+        immediate local acknowledgment, even if the segment sent had not
+        been acknowledged by the distant TCP.  We could optimistically
+        assume eventual success.  If we are wrong, the connection will
+        close anyway due to the timeout. 

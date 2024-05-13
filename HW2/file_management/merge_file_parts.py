@@ -1,3 +1,4 @@
+import hashlib
 import json
 import os
 import sys
@@ -19,7 +20,7 @@ def merge_parts(path_to_file_dir, file_name):
     if number_files - 1 != info_dict["part_counts"]:
         sys.exit("Incorrect count of parts")
 
-    res = bytearray(b"")
+    part_dict = {}
 
     for key in info_dict.keys():
         if key == "part_counts" or key == "extension":
@@ -33,7 +34,19 @@ def merge_parts(path_to_file_dir, file_name):
         with open(path_to_file_part, "rb") as f:
             read_data = f.read()
 
-            res += read_data
+            part_dict[hashlib.md5(read_data).hexdigest()] = read_data
+
+    res = bytearray()
+
+    for key in info_dict.keys():
+        if key == "part_counts" or key == "extension":
+            continue
+
+        for check_sum in part_dict.keys():
+            if check_sum == info_dict[key]["checksum"]:
+                res.extend(part_dict[check_sum])
+                break
+
 
     path_to_proj_dir = pathlib.Path().resolve().parent
     path_to_user_dir = os.path.join(path_to_proj_dir, "users_data", user_name)

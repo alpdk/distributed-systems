@@ -1,0 +1,22 @@
+urned partially filled and PUSH indicated.
+
+        If there is urgent data the user will have been informed as soon
+        as it arrived via a TCP-to-user signal.  The receiving user
+        should thus be in "urgent mode".  If the URGENT flag is on,
+        additional urgent data remains.  If the URGENT flag is off, this
+        call to RECEIVE has returned all the urgent data, and the user
+        may now leave "urgent mode".  Note that data following the
+        urgent pointer (non-urgent data) cannot be delivered to the user
+        in the same buffer with preceeding urgent data unless the
+        boundary is clearly marked for the user.
+
+        To distinguish among several outstanding RECEIVEs and to take
+        care of the case that a buffer is not completely filled, the
+        return code is accompanied by both a buffer pointer and a byte
+        count indicating the actual length of the data received.
+
+        Alternative implementations of RECEIVE might have the TCP
+
+
+
+[Page 48]                 

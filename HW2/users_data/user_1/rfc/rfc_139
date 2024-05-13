@@ -1,0 +1,31 @@
+SEQ=SEG.ACK><CTL=RST>
+
+
+
+                                                               [Page 65]
+
+
+                                                          September 1981
+Transmission Control Protocol
+Functional Specification
+                                                         SEGMENT ARRIVES
+
+
+
+        If the SEG.PRC is greater than the TCB.PRC then if allowed by
+        the user and the system set TCB.PRC<-SEG.PRC, if not allowed
+        send a reset and return.
+
+          <SEQ=SEG.ACK><CTL=RST>
+
+        If the SEG.PRC is less than the TCB.PRC then continue.
+
+        Set RCV.NXT to SEG.SEQ+1, IRS is set to SEG.SEQ and any other
+        control or text should be queued for processing later.  ISS
+        should be selected and a SYN segment sent of the form:
+
+          <SEQ=ISS><ACK=RCV.NXT><CTL=SYN,ACK>
+
+        SND.NXT is set to ISS+1 and SND.UNA to ISS.  The connection
+        state should be changed to SYN-RECEIVED.  Note that any other
+        incoming control or data (combined with SYN) will be 

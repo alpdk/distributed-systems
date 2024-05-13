@@ -1,0 +1,30 @@
+ In implementations of this
+        kind (synchronous), there will still be some asynchronous
+        signals, but these will deal with the connection itself, and not
+        with specific segments or buffers.
+
+        In order for the process to distinguish among error or success
+        indications for different SENDs, it might be appropriate for the
+
+
+                                                               [Page 47]
+
+
+                                                          September 1981
+Transmission Control Protocol
+Functional Specification
+
+
+
+        buffer address to be returned along with the coded response to
+        the SEND request.  TCP-to-user signals are discussed below,
+        indicating the information which should be returned to the
+        calling process.
+
+      Receive
+
+        Format:  RECEIVE (local connection name, buffer address, byte
+        count) -> byte count, urgent flag, push flag
+
+        This command allocates a receiving buffer associated with the
+        specified c

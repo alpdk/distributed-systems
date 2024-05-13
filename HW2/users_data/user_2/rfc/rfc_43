@@ -1,0 +1,41 @@
+ment number at last window update
+
+
+
+                                                               [Page 83]
+
+
+                                                          September 1981
+Transmission Control Protocol
+Glossary
+
+
+
+SND.WND
+          send window
+
+socket
+          An address which specifically includes a port identifier, that
+          is, the concatenation of an Internet Address with a TCP port.
+
+Source Address
+          The source address, usually the network and host identifiers.
+
+SYN
+          A control bit in the incoming segment, occupying one sequence
+          number, used at the initiation of a connection, to indicate
+          where the sequence numbering will start.
+
+TCB
+          Transmission control block, the data structure that records
+          the state of a connection.
+
+TCB.PRC
+          The precedence of the connection.
+
+TCP
+          Transmission Control Protocol:  A host-to-host protocol for
+          reliable communication in internetwork environments.
+
+TOS
+          Type of S

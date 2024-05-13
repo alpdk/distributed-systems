@@ -1,0 +1,81 @@
+  queue the request, respond with "error:  insufficient resources".
+      If Foreign socket was not specified, then return "error:  foreign
+      socket unspecified".
+
+
+
+
+
+
+
+
+
+
+
+
+[Page 54]                                                               
+
+
+September 1981                                                          
+                                           Transmission Control Protocol
+                                                Functional Specification
+OPEN Call
+
+
+
+    SYN-SENT STATE
+    SYN-RECEIVED STATE
+    ESTABLISHED STATE
+    FIN-WAIT-1 STATE
+    FIN-WAIT-2 STATE
+    CLOSE-WAIT STATE
+    CLOSING STATE
+    LAST-ACK STATE
+    TIME-WAIT STATE
+
+      Return "error:  connection already exists".
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                               [Page 55]
+
+
+                                                          September 1981
+Transmission Control Protocol
+Functional Specification
+                                                            

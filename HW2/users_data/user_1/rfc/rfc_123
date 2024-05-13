@@ -1,0 +1,37 @@
+ timeouts.  This section describes the
+  processing the TCP does in response to each of the events.  In many
+  cases the processing required depends on the state of the connection.
+
+    Events that occur:
+
+      User Calls
+
+        OPEN
+        SEND
+        RECEIVE
+        CLOSE
+        ABORT
+        STATUS
+
+      Arriving Segments
+
+        SEGMENT ARRIVES
+
+      Timeouts
+
+        USER TIMEOUT
+        RETRANSMISSION TIMEOUT
+        TIME-WAIT TIMEOUT
+
+  The model of the TCP/user interface is that user commands receive an
+  immediate return and possibly a delayed response via an event or
+  pseudo interrupt.  In the following descriptions, the term "signal"
+  means cause a delayed response.
+
+  Error responses are given as character strings.  For example, user
+  commands referencing connections that do not exist receive "error:
+  connection not open".
+
+  Please note in the following that all arithmetic on sequence numbers,
+  acknowledgment numbers, windows, et cetera, is modulo 2**32 the size
+  of the sequence nu

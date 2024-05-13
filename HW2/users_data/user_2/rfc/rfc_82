@@ -1,0 +1,22 @@
+nts may arrive due to network or TCP retransmission.
+  As discussed in the section on sequence numbers the TCP performs
+  certain tests on the sequence and acknowledgment numbers in the
+  segments to verify their acceptability.
+
+  The sender of data keeps track of the next sequence number to use in
+  the variable SND.NXT.  The receiver of data keeps track of the next
+  sequence number to expect in the variable RCV.NXT.  The sender of data
+  keeps track of the oldest unacknowledged sequence number in the
+  variable SND.UNA.  If the data flow is momentarily idle and all data
+  sent has been acknowledged then the three variables will be equal.
+
+  When the sender creates a segment and transmits it the sender advances
+  SND.NXT.  When the receiver accepts a segment it advances RCV.NXT and
+  sends an acknowledgment.  When the data sender receives an
+
+
+[Page 40]                                                               
+
+
+September 1981                                                          
+                 

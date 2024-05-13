@@ -1,0 +1,57 @@
+text in the
+        segment, queue them for processing after the ESTABLISHED state
+        has been reached, return.
+
+      fifth, if neither of the SYN or RST bits is set then drop the
+      segment and return.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[Page 68]                                                               
+
+
+September 1981                                                          
+                                           Transmission Control Protocol
+                                                Functional Specification
+SEGMENT ARRIVES
+
+
+
+    Otherwise,
+
+    first check sequence number
+
+      SYN-RECEIVED STATE
+      ESTABLISHED STATE
+      FIN-WAIT-1 STATE
+      FIN-WAIT-2 STATE
+      CLOSE-WAIT STATE
+      CLOSING STATE
+      LAST-ACK STATE
+      TIME-WAIT STATE
+
+        Segments are processed in sequence.  Initial tests on arrival
+        are used to discard old duplicates, but further processing is
+        done in SEG.SEQ order.  If a segment's contents straddle the
+        boundary between old and n

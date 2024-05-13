@@ -1,0 +1,23 @@
+ir. And after a while the data transmission will be in
+      mostly small segments.
+
+      The suggestion here is that the TCP implementations need to
+      actively attempt to combine small window allocations into larger
+      windows, since the mechanisms for managing the window tend to lead
+      to many small windows in the simplest minded implementations.
+
+3.8.  Interfaces
+
+  There are of course two interfaces of concern:  the user/TCP interface
+  and the TCP/lower-level interface.  We have a fairly elaborate model
+  of the user/TCP interface, but the interface to the lower level
+  protocol module is left unspecified here, since it will be specified
+  in detail by the specification of the lowel level protocol.  For the
+  case that the lower level is IP we note some of the parameter values
+  that TCPs might use.
+
+  User/TCP Interface
+
+    The following functional description of user commands to the TCP is,
+    at best, fictional, since every operating system will have different
+    facilities.  Consequent

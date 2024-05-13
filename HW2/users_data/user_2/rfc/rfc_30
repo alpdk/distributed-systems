@@ -1,0 +1,27 @@
+--------+
+ |FINWAIT-2|                  | CLOSING |                   | LAST-ACK|
+ +---------+                  +---------+                   +---------+
+   |                rcv ACK of FIN |                 rcv ACK of FIN |  
+   |  rcv FIN       -------------- |    Timeout=2MSL -------------- |  
+   |  -------              x       V    ------------        x       V  
+    \ snd ACK                 +---------+delete TCB         +---------+
+     ------------------------>|TIME WAIT|------------------>| CLOSED  |
+                              +---------+                   +---------+
+
+                      TCP Connection State Diagram
+                               Figure 6.
+
+
+                                                               [Page 23]
+
+
+                                                          September 1981
+Transmission Control Protocol
+Functional Specification
+
+
+
+3.3.  Sequence Numbers
+
+  A fundamental notion in the design is that every octet of data sent
+  over a TCP connection has a sequence num

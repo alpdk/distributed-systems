@@ -9,7 +9,7 @@ def save_file(local_path_to_file, path_to_file_dir, file_name):
     source = pathlib.Path(local_path_to_file)
 
     counter = 1
-    chunk_size = 800
+    chunk_size = 1024
 
     with open(source, "rb") as file:
         data_json_files_info = {}

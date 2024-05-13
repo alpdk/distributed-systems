@@ -1,0 +1,40 @@
+
+
+      Delete the TCB and return "error:  closing" responses to any
+      queued SENDs, or RECEIVEs.
+
+    SYN-RECEIVED STATE
+
+      If no SENDs have been issued and there is no pending data to send,
+      then form a FIN segment and send it, and enter FIN-WAIT-1 state;
+      otherwise queue for processing after entering ESTABLISHED state.
+
+    ESTABLISHED STATE
+
+      Queue this until all preceding SENDs have been segmentized, then
+      form a FIN segment and send it.  In any case, enter FIN-WAIT-1
+      state.
+
+    FIN-WAIT-1 STATE
+    FIN-WAIT-2 STATE
+
+      Strictly speaking, this is an error and should receive a "error:
+      connection closing" response.  An "ok" response would be
+      acceptable, too, as long as a second FIN is not emitted (the first
+      FIN may be retransmitted though).
+
+
+
+
+
+
+
+
+
+
+
+[Page 60]                                                               
+
+
+September 1981                                                          
+                                           Transmissio

@@ -1,0 +1,40 @@
+h same message, advance RCV.NXT
+      over the FIN, and send an acknowledgment for the FIN.  Note that
+      FIN implies PUSH for any segment text not yet delivered to the
+      user.
+
+        SYN-RECEIVED STATE
+        ESTABLISHED STATE
+
+          Enter the CLOSE-WAIT state.
+
+        FIN-WAIT-1 STATE
+
+          If our FIN has been ACKed (perhaps in this segment), then
+          enter TIME-WAIT, start the time-wait timer, turn off the other
+          timers; otherwise enter the CLOSING state.
+
+        FIN-WAIT-2 STATE
+
+          Enter the TIME-WAIT state.  Start the time-wait timer, turn
+          off the other timers.
+
+        CLOSE-WAIT STATE
+
+          Remain in the CLOSE-WAIT state.
+
+        CLOSING STATE
+
+          Remain in the CLOSING state.
+
+        LAST-ACK STATE
+
+          Remain in the LAST-ACK state.
+
+
+                                                               [Page 75]
+
+
+                                                          September 1981
+Transmission Control Protocol
+Functional Specific

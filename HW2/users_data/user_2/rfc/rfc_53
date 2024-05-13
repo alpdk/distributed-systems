@@ -1,0 +1,32 @@
+bits
+
+    The number of 32 bit words in the TCP Header.  This indicates where
+    the data begins.  The TCP header (even one including options) is an
+    integral number of 32 bits long.
+
+  Reserved:  6 bits
+
+    Reserved for future use.  Must be zero.
+
+  Control Bits:  6 bits (from left to right):
+
+    URG:  Urgent Pointer field significant
+    ACK:  Acknowledgment field significant
+    PSH:  Push Function
+    RST:  Reset the connection
+    SYN:  Synchronize sequence numbers
+    FIN:  No more data from sender
+
+  Window:  16 bits
+
+    The number of data octets beginning with the one indicated in the
+    acknowledgment field which the sender of this segment is willing to
+    accept.
+
+  Checksum:  16 bits
+
+    The checksum field is the 16 bit one's complement of the one's
+    complement sum of all 16 bit words in the header and text.  If a
+    segment contains an odd number of header and text octets to be
+    checksummed, the last octet is padded on the right with zeros to
+    form a 16 bit word for checksum pu

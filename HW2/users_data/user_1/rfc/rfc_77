@@ -1,0 +1,27 @@
+
+  2.  SYN-SENT    --> <SEQ=100><CTL=SYN>               ...
+
+  3.  (duplicate) ... <SEQ=90><CTL=SYN>               --> SYN-RECEIVED
+
+  4.  SYN-SENT    <-- <SEQ=300><ACK=91><CTL=SYN,ACK>  <-- SYN-RECEIVED
+
+  5.  SYN-SENT    --> <SEQ=91><CTL=RST>               --> LISTEN
+  
+
+  6.              ... <SEQ=100><CTL=SYN>               --> SYN-RECEIVED
+
+  7.  SYN-SENT    <-- <SEQ=400><ACK=101><CTL=SYN,ACK>  <-- SYN-RECEIVED
+
+  8.  ESTABLISHED --> <SEQ=101><ACK=401><CTL=ACK>      --> ESTABLISHED
+
+                    Recovery from Old Duplicate SYN
+
+                               Figure 9.
+
+  As a simple example of recovery from old duplicates, consider
+  figure 9.  At line 3, an old duplicate SYN arrives at TCP B.  TCP B
+  cannot tell that this is an old duplicate, so it responds normally
+  (line 4).  TCP A detects that the ACK field is incorrect and returns a
+  RST (reset) with its SEQ field selected to make the segment
+  believable.  TCP B, on receiving the RST, returns to the LISTEN state.
+  When the original SYN (p

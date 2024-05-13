@@ -1,0 +1,28 @@
+ Often in the specification the information will be
+      an error message.  In other cases there will be information
+      relating to the completion of processing a SEND or RECEIVE or
+      other user call.
+
+      The following information is provided:
+
+        Local Connection Name                    Always
+        Response String                          Always
+        Buffer Address                           Send & Receive
+        Byte count (counts bytes received)       Receive
+        Push flag                                Receive
+        Urgent flag                              Receive
+
+
+[Page 50]                                                               
+
+
+September 1981                                                          
+                                           Transmission Control Protocol
+                                                Functional Specification
+
+
+
+  TCP/Lower-Level Interface
+
+    The TCP calls on a lower level protocol module to actually send and
+    receive informat

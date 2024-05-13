@@ -1,0 +1,28 @@
+ata from a segment
+  into the receiving user's buffer and notifies the receiving user.  The
+  TCPs include control information in the segments which they use to
+  ensure reliable ordered data transmission.
+
+  The model of internet communication is that there is an internet
+  protocol module associated with each TCP which provides an interface
+  to the local network.  This internet module packages TCP segments
+  inside internet datagrams and routes these datagrams to a destination
+  internet module or intermediate gateway.  To transmit the datagram
+  through the local network, it is embedded in a local network packet.
+
+  The packet switches may perform further packaging, fragmentation, or
+
+
+                                                                [Page 7]
+
+
+                                                          September 1981
+Transmission Control Protocol
+Philosophy
+
+
+
+  other operations to achieve the delivery of the local packet to the
+  destination internet module.
+
+  At a gateway between network

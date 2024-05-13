@@ -1,0 +1,21 @@
+These calls have parameters for passing the address, type of
+  service, precedence, security, and other control information.
+
+2.5.  Relation to Other Protocols
+
+  The following diagram illustrates the place of the TCP in the protocol
+  hierarchy:
+
+                                    
+       +------+ +-----+ +-----+       +-----+                    
+       |Telnet| | FTP | |Voice|  ...  |     |  Application Level 
+       +------+ +-----+ +-----+       +-----+                    
+             |   |         |             |                       
+            +-----+     +-----+       +-----+                    
+            | TCP |     | RTP |  ...  |     |  Host Level        
+            +-----+     +-----+       +-----+                    
+               |           |             |                       
+            +-------------------------------+                    
+            |    Internet Protocol & ICMP   |  Gateway Level     
+            +-------------------------------+                    
+             

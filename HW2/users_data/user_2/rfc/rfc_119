@@ -1,0 +1,24 @@
+                     
+
+
+September 1981                                                          
+                                           Transmission Control Protocol
+                                                Functional Specification
+
+
+
+  which fit the current window, and may repackage segments on the
+  retransmission queue.  Such repackaging is not required, but may be
+  helpful.
+
+  In a connection with a one-way data flow, the window information will
+  be carried in acknowledgment segments that all have the same sequence
+  number so there will be no way to reorder them if they arrive out of
+  order.  This is not a serious problem, but it will allow the window
+  information to be on occasion temporarily based on old reports from
+  the data receiver.  A refinement to avoid this problem is to act on
+  the window information from segments that carry the highest
+  acknowledgment number (that is segments with acknowledgment number
+  equal or greater than the highest previously received).
+
+  The window m

@@ -1,0 +1,25 @@
+un intended) finally arrives at line 6, the
+  synchronization proceeds normally.  If the SYN at line 6 had arrived
+  before the RST, a more complex exchange might have occurred with RST's
+  sent in both directions.
+
+  Half-Open Connections and Other Anomalies
+
+  An established connection is said to be  "half-open" if one of the
+  TCPs has closed or aborted the connection at its end without the
+  knowledge of the other, or if the two ends of the connection have
+  become desynchronized owing to a crash that resulted in loss of
+  memory.  Such connections will automatically become reset if an
+  attempt is made to send data in either direction.  However, half-open
+  connections are expected to be unusual, and the recovery procedure is
+  mildly involved.
+
+  If at site A the connection no longer exists, then an attempt by the
+
+
+                                                               [Page 33]
+
+
+                                                          September 1981
+Transmission Control Protocol
+Functional 

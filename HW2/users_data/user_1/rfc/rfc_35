@@ -1,0 +1,46 @@
+nction in
+  a multilevel secure environment; some may be limited to unclassified
+  use only, and others may operate at only one security level and
+  compartment.  Consequently, some TCP implementations and services to
+  users may be limited to a subset of the multilevel secure case.
+
+  TCP modules which operate in a multilevel secure environment must
+  properly mark outgoing segments with the security, compartment, and
+  precedence.  Such TCP modules must also provide to their users or
+  higher level protocols such as Telnet or THP an interface to allow
+  them to specify the desired security level, compartment, and
+  precedence of connections.
+
+2.10.  Robustness Principle
+
+  TCP implementations will follow a general principle of robustness:  be
+  conservative in what you do, be liberal in what you accept from
+  others.
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                               [Page 13]
+
+
+                                                          September 1981
+Transmission Contro

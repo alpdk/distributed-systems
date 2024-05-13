@@ -1,0 +1,25 @@
+mall segment arrives (with out updating the
+      window information), and then to send another acknowledgment with
+      new window information when the window is larger.
+
+      The segment sent to probe a zero window may also begin a break up
+      of transmitted data into smaller and smaller segments.  If a
+      segment containing a single data octet sent to probe a zero window
+      is accepted, it consumes one octet of the window now available.
+      If the sending TCP simply sends as much as it can whenever the
+      window is non zero, the transmitted data will be broken into
+      alternating big and small segments.  As time goes on, occasional
+      pauses in the receiver making window allocation available will
+
+
+                                                               [Page 43]
+
+
+                                                          September 1981
+Transmission Control Protocol
+Functional Specification
+
+
+
+      result in breaking the big segments into a small and not quite so
+      big pa

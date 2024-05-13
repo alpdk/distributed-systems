@@ -1,0 +1,22 @@
+e network output queue at a source host. The
+    duplicate detection and sequencing algorithm in the TCP protocol
+    relies on the unique binding of segment data to sequence space to
+    the extent that sequence numbers will not cycle through all 2**32
+    values before the segment data bound to those sequence numbers has
+    been delivered and acknowledged by the receiver and all duplicate
+    copies of the segments have "drained" from the internet.  Without
+    such an assumption, two distinct TCP segments could conceivably be
+
+
+[Page 28]                                                               
+
+
+September 1981                                                          
+                                           Transmission Control Protocol
+                                                Functional Specification
+
+
+
+    assigned the same or overlapping sequence numbers, causing confusion
+    at the receiver as to which data is new and which is old.  Remember
+    that each segment is bound to as many c

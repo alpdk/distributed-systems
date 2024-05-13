@@ -1,7 +1,9 @@
+import hashlib
 import json
 import math
 import os
 import pathlib
+import shutil
 import socket
 import threading
 import time
@@ -9,7 +11,7 @@ import random
 
 
 class Peer:
-    def __init__(self, user_name, server_host="127.0.0.1", server_port=5000):
+    def __init__(self, user_name, server_host="127.0.0.1", server_port=50000):
         host_and_port = self.get_host_and_port(user_name)
 
         if host_and_port == None:
@@ -98,56 +100,86 @@ class Peer:
 
         print("Start save file by path: ", path_to_file_dir)
 
+        res_dict = dictionary.copy()
+
         if not os.path.exists(path_to_file_dir):
             os.makedirs(path_to_file_dir)
 
-            for sub_file_key in dictionary.keys():
-                if sub_file_key == "extension":
-                    continue
+            path_to_file_info = os.path.join(path_to_file_dir, "file_info.json")
 
-                sub_file_name = sub_file_key
-                path_to_file_part = os.path.join(path_to_file_dir, sub_file_name)
+            if os.path.exists(path_to_file_info):
+                with open(path_to_file_info, 'r') as file:
+                    file_info = json.load(file)
 
-                with open(str(path_to_file_part), "wb") as write_file:
-                    write_file.write(data[dictionary[sub_file_key]["part"] - 1])
+                for i in file_info.keys():
+                    if i not in dictionary:
+                        res_dict[i] = file_info[i]
+
+        counter = 0
+
+        for sub_file_key in dictionary.keys():
+            if sub_file_key == "extension" or sub_file_key == "part_counts":
+                continue
+
+            sub_file_name = sub_file_key
+            path_to_file_part = os.path.join(path_to_file_dir, sub_file_name)
+
+            with open(str(path_to_file_part), "wb") as write_file:
+                write_file.write(data[counter])
+
+            counter += 1
 
         path_to_file_info = os.path.join(path_to_file_dir, "file_info.json")
 
         with open(str(path_to_file_info), "w") as json_file:
-            json.dump(dictionary, json_file, indent=4)
+            json.dump(res_dict, json_file, indent=4)
+
+        return dictionary["part_counts"]
 
     def direct_request(self, addresses, file_name):
-        who_will_be_asked = random.randint(0, len(addresses) - 1)
+        while len(addresses) != 0:
+            who_will_be_asked = random.randint(0, len(addresses) - 1)
 
-        will_ask = addresses[who_will_be_asked].split(":")
-        will_ask[1] = int(will_ask[1])
+            will_ask = addresses[who_will_be_asked].split(":")
+            will_ask[1] = int(will_ask[1])
 
-        direct_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        direct_sock.connect((will_ask[0], will_ask[1]))
+            direct_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            direct_sock.connect((will_ask[0], will_ask[1]))
 
-        direct_sock.send(file_name.encode("utf-8")[:1024])
+            direct_sock.send(file_name.encode("utf-8")[:1024])
 
-        count_of_files = int(direct_sock.recv(1024).decode("utf-8"))
+            count_of_files = int(direct_sock.recv(1024).decode("utf-8"))
 
-        data = []
+            data = []
 
-        for i in range(count_of_files):
-            file_data = direct_sock.recv(1024)
+            for i in range(count_of_files):
+                file_data = bytearray(direct_sock.recv(1024))
 
-            data.append(file_data)
+                data.append(file_data)
 
-        count_of_json_parts = int(direct_sock.recv(1024).decode())
+            count_of_json_parts = int(direct_sock.recv(1024).decode("utf-8"))
 
-        json = ""
+            json = ""
 
-        for i in range(count_of_json_parts):
-            json_part = direct_sock.recv(1024).decode("utf-8")
+            for i in range(count_of_json_parts):
+                json_part = direct_sock.recv(1024).decode("utf-8")
 
-            json = json + json_part
+                json = json + json_part
 
-        dictionary = eval(json)
+            dictionary = eval(json)
 
-        self.save_files(dictionary, data, file_name)
+            count = self.save_files(dictionary, data, file_name)
+
+            path_to_proj_dir = pathlib.Path().resolve().parent
+            path_to_file_dir = os.path.join(path_to_proj_dir, "users_data", self.user_name, file_name)
+
+            lst = os.listdir(path_to_file_dir)
+
+            if count == len(lst) - 1:
+                break
+
+            addresses.remove(addresses[who_will_be_asked])
+            direct_sock.close()
 
     def start_sending_file(self, client_socket, addr, file_name):
         path_to_proj_dir = pathlib.Path().resolve().parent
@@ -159,12 +191,17 @@ class Peer:
 
         client_socket.send(str(lst_len - 1).encode("utf-8")[:1024])
 
-        for i in range(1, lst_len):
-            path_to_file_part = os.path.join(path_to_file_dir, file_name + "_" + str(i))
+        lst = os.listdir(path_to_file_dir)
+
+        for i in lst:
+            if i == "file_info.json":
+                continue
+
+            path_to_file_part = os.path.join(path_to_file_dir, i)
 
             with open(str(path_to_file_part), "rb") as file:
                 time.sleep(0.5)
-                client_socket.send(file.read())
+                client_socket.send(file.read()[:1024])
 
         path_to_file_inf = os.path.join(path_to_file_dir, "file_info.json")
         f = open(path_to_file_inf)
@@ -182,10 +219,9 @@ class Peer:
         for i in range(0, count_of_send):
             time.sleep(0.5)
 
-            client_socket.send(string_file_info[i * 1024:(min((i + 1) * 1024, len(string_file_info)))])
+            client_socket.send(string_file_info[i * 1024:((i + 1) * 1024)])
 
         client_socket.close()
-
 
     def direct_request_file(self):
         while True:
@@ -193,6 +229,51 @@ class Peer:
 
             file_requested = client_socket.recv(1024).decode("utf-8")
             self.start_sending_file(client_socket, addr, file_requested)
+
+    def check_files_integrity(self):
+        path_to_proj_dir = pathlib.Path().resolve().parent
+        path_to_file_dir = os.path.join(path_to_proj_dir, "users_data", self.user_name)
+
+        sub_dirs = [f.path for f in os.scandir(path_to_file_dir) if f.is_dir()]
+
+        for sub_file in sub_dirs:
+            path_to_sub_file = os.path.join(path_to_file_dir, sub_file)
+            path_to_file_info = os.path.join(path_to_sub_file, "file_info.json")
+
+            data_dict = {}
+
+            if not os.path.exists(path_to_file_info):
+                shutil.rmtree(path_to_sub_file)
+                continue
+
+            with open(path_to_file_info, "r") as json_file:
+                data_dict = json.load(json_file)
+
+            sub_files = set(data_dict.keys())
+
+            for i in sub_files:
+                if i == "extension" or i == "part_counts":
+                    continue
+
+                path_to_sub_file_part = os.path.join(path_to_sub_file, i)
+
+                if not os.path.exists(path_to_sub_file_part):
+                    data_dict.pop(i)
+                    continue
+
+                with open(path_to_sub_file_part, "rb") as part_file:
+                    data = part_file.read()
+
+                if str(hashlib.md5(data).hexdigest()) != data_dict[i]["checksum"]:
+                    print(str(hashlib.md5(data).hexdigest()), data_dict[i]["checksum"])
+                    data_dict.pop(i)
+                    os.remove(path_to_sub_file_part)
+
+            if not data_dict:
+                shutil.rmtree(path_to_file_dir)
+            else:
+                with open(path_to_file_info, "w") as json_file:
+                    json.dump(data_dict, json_file, indent=4)
 
     def start(self):
         try:
@@ -203,7 +284,7 @@ class Peer:
             request_file_threads.start()
 
             direct_request_threads = threading.Thread(target=self.direct_request_file,
-                                                    args=())
+                                                      args=())
             direct_request_threads.start()
 
             while True:

@@ -1,0 +1,41 @@
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+                            TCP Header Format
+
+          Note that one tick mark represents one bit position.
+
+                               Figure 3.
+
+  Source Port:  16 bits
+
+    The source port number.
+
+  Destination Port:  16 bits
+
+    The destination port number.
+
+
+
+
+                                                               [Page 15]
+
+
+                                                          September 1981
+Transmission Control Protocol
+Functional Specification
+
+
+
+  Sequence Number:  32 bits
+
+    The sequence number of the first data octet in this segment (except
+    when SYN is present). If SYN is present the sequence number is the
+    initial sequence number (ISN) and the first data octet is ISN+1.
+
+  Acknowledgment Number:  32 bits
+
+    If the ACK control bit is set this field contains the value of the
+    next sequence number the sender of the segment is expecting to
+    receive.  Once a connection is established this is always sent.
+
+  Data Offset:  4 

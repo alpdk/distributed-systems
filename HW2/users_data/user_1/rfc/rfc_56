@@ -1,0 +1,41 @@
+ of such values.  The symbol "=<" means "less than or equal"
+  (modulo 2**32).
+
+  The typical kinds of sequence number comparisons which the TCP must
+  perform include:
+
+    (a)  Determining that an acknowledgment refers to some sequence
+         number sent but not yet acknowledged.
+
+    (b)  Determining that all sequence numbers occupied by a segment
+         have been acknowledged (e.g., to remove the segment from a
+         retransmission queue).
+
+    (c)  Determining that an incoming segment contains sequence numbers
+         which are expected (i.e., that the segment "overlaps" the
+         receive window).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[Page 24]                                                               
+
+
+September 1981                                                          
+                                           Transmission Control Protocol
+                                                Functional Specification
+
+
+
+  In response to sending data the TCP will receive acknowledgments.  The
+  following compar

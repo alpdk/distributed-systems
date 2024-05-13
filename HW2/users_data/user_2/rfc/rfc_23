@@ -1,0 +1,17 @@
+erconnecting them and to provide standard interprocess
+  communication protocols which can support a broad range of
+  applications.  In anticipation of the need for such standards, the
+  Deputy Undersecretary of Defense for Research and Engineering has
+  declared the Transmission Control Protocol (TCP) described herein to
+  be a basis for DoD-wide inter-process communication protocol
+  standardization.
+
+  TCP is a connection-oriented, end-to-end reliable protocol designed to
+  fit into a layered hierarchy of protocols which support multi-network
+  applications.  The TCP provides for reliable inter-process
+  communication between pairs of processes in host computers attached to
+  distinct but interconnected computer communication networks.  Very few
+  assumptions are made as to the reliability of the communication
+  protocols below the TCP layer.  TCP assumes it can obtain a simple,
+  potentially unreliable datagram service from the lower level
+  protocols.  In principle, the TCP should be able to operate abov
