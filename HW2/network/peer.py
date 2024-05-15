@@ -115,8 +115,6 @@ class Peer:
                     if i not in dictionary:
                         res_dict[i] = file_info[i]
 
-        counter = 0
-
         for sub_file_key in dictionary.keys():
             if sub_file_key == "extension" or sub_file_key == "part_counts":
                 continue
@@ -125,9 +123,7 @@ class Peer:
             path_to_file_part = os.path.join(path_to_file_dir, sub_file_name)
 
             with open(str(path_to_file_part), "wb") as write_file:
-                write_file.write(data[counter])
-
-            counter += 1
+                write_file.write(data[dictionary[sub_file_key]["checksum"]])
 
         path_to_file_info = os.path.join(path_to_file_dir, "file_info.json")
 
@@ -150,12 +146,12 @@ class Peer:
 
             count_of_files = int(direct_sock.recv(1024).decode("utf-8"))
 
-            data = []
+            data = {}
 
             for i in range(count_of_files):
                 file_data = bytearray(direct_sock.recv(1024))
 
-                data.append(file_data)
+                data[str(hashlib.md5(file_data).hexdigest())] = file_data
 
             count_of_json_parts = int(direct_sock.recv(1024).decode("utf-8"))
 
