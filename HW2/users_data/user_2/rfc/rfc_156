@@ -1,0 +1,19 @@
+onnection.  If no OPEN precedes this command or the
+        calling process is not authorized to use this connection, an
+        error is returned.
+
+        In the simplest implementation, control would not return to the
+        calling program until either the buffer was filled, or some
+        error occurred, but this scheme is highly subject to deadlocks.
+        A more sophisticated implementation would permit several
+        RECEIVEs to be outstanding at once.  These would be filled as
+        segments arrive.  This strategy permits increased throughput at
+        the cost of a more elaborate scheme (possibly asynchronous) to
+        notify the calling program that a PUSH has been seen or a buffer
+        filled.
+
+        If enough data arrive to fill the buffer before a PUSH is seen,
+        the PUSH flag will not be set in the response to the RECEIVE.
+        The buffer will be filled with as much data as it can hold.  If
+        a PUSH is seen before the buffer is filled the buffer will be
+        ret

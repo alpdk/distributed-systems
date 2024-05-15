@@ -1,0 +1,22 @@
+A connection attempt with mismatched security/compartment values or a
+  lower precedence value must be rejected by sending a reset.  Rejecting
+  a connection due to too low a precedence only occurs after an
+  acknowledgment of the SYN has been received.
+
+  Note that TCP modules which operate only at the default value of
+  precedence will still have to check the precedence of incoming
+  segments and possibly raise the precedence level they use on the
+  connection.
+
+  The security paramaters may be used even in a non-secure environment
+  (the values would indicate unclassified data), thus hosts in
+  non-secure environments must be prepared to receive the security
+  parameters, though they need not send them.
+
+3.7.  Data Communication
+
+  Once the connection is established data is communicated by the
+  exchange of segments.  Because segments may be lost due to errors
+  (checksum test failure), or network congestion, TCP uses
+  retransmission (after a timeout) to ensure delivery of every segment.
+  Duplicate segme

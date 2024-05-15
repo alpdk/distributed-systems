@@ -1,0 +1,21 @@
+ly, we must warn readers that different TCP
+    implementations may have different user interfaces.  However, all
+    TCPs must provide a certain minimum set of services to guarantee
+    that all TCP implementations can support the same protocol
+    hierarchy.  This section specifies the functional interfaces
+    required of all TCP implementations.
+
+    TCP User Commands
+
+      The following sections functionally characterize a USER/TCP
+      interface.  The notation used is similar to most procedure or
+      function calls in high level languages, but this usage is not
+      meant to rule out trap type service calls (e.g., SVCs, UUOs,
+      EMTs).
+
+      The user commands described below specify the basic functions the
+      TCP must perform to support interprocess communication.
+      Individual implementations must define their own exact format, and
+      may provide combinations or subsets of the basic functions in
+      single calls.  In particular, some implementations may wish to
+      automatically O

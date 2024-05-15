@@ -1,0 +1,18 @@
+e called a Transmission Control Block (TCB).  One
+  implementation strategy would have the local connection name be a
+  pointer to the TCB for this connection.  The OPEN call also specifies
+  whether the connection establishment is to be actively pursued, or to
+  be passively waited for.
+
+  A passive OPEN request means that the process wants to accept incoming
+  connection requests rather than attempting to initiate a connection.
+  Often the process requesting a passive OPEN will accept a connection
+  request from any caller.  In this case a foreign socket of all zeros
+  is used to denote an unspecified socket.  Unspecified foreign sockets
+  are allowed only on passive OPENs.
+
+  A service process that wished to provide services for unknown other
+  processes would issue a passive OPEN request with an unspecified
+  foreign socket.  Then a connection could be made with any process that
+  requested a connection to this local socket.  It would help if this
+  local socket were known to be associated with this servi

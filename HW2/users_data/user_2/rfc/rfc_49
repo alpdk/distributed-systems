@@ -1,0 +1,65 @@
+mber space.  Also note that "=<" means less than or
+  equal to (modulo 2**32).
+
+
+
+[Page 52]                                                               
+
+
+September 1981                                                          
+                                           Transmission Control Protocol
+                                                Functional Specification
+
+
+
+  A natural way to think about processing incoming segments is to
+  imagine that they are first tested for proper sequence number (i.e.,
+  that their contents lie in the range of the expected "receive window"
+  in the sequence number space) and then that they are generally queued
+  and processed in sequence number order.
+
+  When a segment overlaps other already received segments we reconstruct
+  the segment to contain just the new data, and adjust the header fields
+  to be consistent.
+
+  Note that if no state change is mentioned the TCP stays in the same
+  state.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                    

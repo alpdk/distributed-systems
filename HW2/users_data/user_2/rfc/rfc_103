@@ -1,0 +1,44 @@
+edgment of the form:
+
+          <SEQ=SND.NXT><ACK=RCV.NXT><CTL=ACK>
+
+        This acknowledgment should be piggybacked on a segment being
+        transmitted if possible without incurring undue delay.
+
+
+
+
+
+
+
+
+
+
+
+
+[Page 74]                                                               
+
+
+September 1981                                                          
+                                           Transmission Control Protocol
+                                                Functional Specification
+SEGMENT ARRIVES
+
+
+
+      CLOSE-WAIT STATE
+      CLOSING STATE
+      LAST-ACK STATE
+      TIME-WAIT STATE
+
+        This should not occur, since a FIN has been received from the
+        remote side.  Ignore the segment text.
+
+    eighth, check the FIN bit,
+
+      Do not process the FIN if the state is CLOSED, LISTEN or SYN-SENT
+      since the SEG.SEQ cannot be validated; drop the segment and
+      return.
+
+      If the FIN bit is set, signal the user "connection closing" and
+      return any pending RECEIVEs wit

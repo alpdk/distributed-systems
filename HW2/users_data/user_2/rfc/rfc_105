@@ -1,0 +1,117 @@
+lize the retransmission timer,
+    and return.
+
+  TIME-WAIT TIMEOUT
+
+    If the time-wait timeout expires on a connection delete the TCB,
+    enter the CLOSED state and return.
+
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                               [Page 77]
+
+
+                                                          September 1981
+Transmission Control Protocol
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[Page 78]                                                               
+
+
+September 1981                                                          
+                                           Transmission Control Protocol
+
+
+
+                                GLOSSARY
+
+
+
+1822
+          BBN Report 1822, "The Specification of the Interconnection of
+          a Host and an IMP".  The specification of interface between a
+          host and the ARPANET.
+
+ACK
+          A control bit (acknowledge) occupying no sequence space, which
+          indicates that the acknowledgment field of

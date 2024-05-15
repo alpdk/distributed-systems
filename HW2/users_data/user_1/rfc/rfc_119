@@ -1,0 +1,24 @@
+of the connection, or on the
+        implementation itself, some of this information may not be
+        available or meaningful.  If the calling process is not
+        authorized to use this connection, an error is returned.  This
+        prevents unauthorized processes from gaining information about a
+        connection.
+
+      Abort
+
+        Format:  ABORT (local connection name)
+
+        This command causes all pending SENDs and RECEIVES to be
+        aborted, the TCB to be removed, and a special RESET message to
+        be sent to the TCP on the other side of the connection.
+        Depending on the implementation, users may receive abort
+        indications for each outstanding SEND or RECEIVE, or may simply
+        receive an ABORT-acknowledgment.
+
+    TCP-to-User Messages
+
+      It is assumed that the operating system environment provides a
+      means for the TCP to asynchronously signal the user program.  When
+      the TCP does signal a user program, certain information is passed
+      to the user. 

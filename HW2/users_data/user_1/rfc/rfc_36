@@ -1,0 +1,81 @@
+l Protocol
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[Page 14]                                                               
+
+
+September 1981                                                          
+                                           Transmission Control Protocol
+
+
+
+                      3.  FUNCTIONAL SPECIFICATION
+
+3.1.  Header Format
+
+  TCP segments are sent as internet datagrams.  The Internet Protocol
+  header carries several information fields, including the source and
+  destination host addresses [2].  A TCP header follows the internet
+  header, supplying information specific to the TCP protocol.  This
+  division allows for the existence of host level protocols other than
+  TCP.
+
+  TCP Header Format
+
+                                    
+    0                   1                   2                   3   
+    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |          Source Port          |    

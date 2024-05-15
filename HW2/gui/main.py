@@ -159,6 +159,13 @@ class LoginPage(tk.Frame):
 
     def login_success(self, username):
         self.controller.username.set(username)
+        path_to_user_data = str(os.path.join(self.controller.path_to_dir, "users_data", username))
+        user_data = os.listdir(path_to_user_data)
+        if "combined_files" in user_data:
+            user_data.remove("combined_files")
+        user_data.remove("user_info.json")
+        self.controller.frames[ProfilePage].uploaded_files = user_data
+        self.controller.frames[ProfilePage].update_file_listbox()
         self.controller.show_frame(ProfilePage)
 
     def password_not_recognised(self):
@@ -337,38 +344,79 @@ class ProfilePage(tk.Frame):
 
         self.config(bg='white')
 
-        label = tk.Label(self, textvariable=self.controller.username, bg='white', font=("", 10))
-        label.place(relx=0.5, rely=0.075, relwidth=0.2, relheight=0.1, anchor="center")
+        search_icon = tk.PhotoImage(file=os.path.join(self.controller.image_path, "search_icon.png"))
+        self.search_icon = search_icon.subsample(12)
 
-        self.logout_button = tk.Button(self, text="Logout", font=("", 5), bg=header_color, fg='white',
+        label = tk.Label(self, textvariable=self.controller.username, bg='white', font=("", 8))
+        label.place(relx=0.85, rely=0.075, relwidth=0.2, relheight=0.1, anchor="center")
+
+        self.logout_button = tk.Button(self, text="Logout", font=("", 4), bg=header_color, fg='white',
                                        activebackground=header_shadow_color, activeforeground='white',
                                        command=self.logout)
-        self.logout_button.place(relx=0.43, rely=0.15, relwidth=0.15, anchor="center")
+        self.logout_button.place(relx=0.8, rely=0.15, relwidth=0.1, anchor="center")
 
-        self.delete_account_button = tk.Button(self, text="Delete account", font=("", 5), bg=header_color, fg='white',
+        self.delete_account_button = tk.Button(self, text="Delete account", font=("", 4), bg=header_color, fg='white',
                                                activebackground=header_shadow_color, activeforeground='white',
                                                command=self.delete_account)
-        self.delete_account_button.place(relx=0.57, rely=0.15, relwidth=0.15, anchor="center")
+        self.delete_account_button.place(relx=0.9, rely=0.15, relwidth=0.1, anchor="center")
 
-        self.uploaded_files = []
+        label_uploaded = tk.Label(self, text="Files online", bg='white', font=("", 10))
+        label_uploaded.place(relx=0.2, rely=0.15, relwidth=0.25, relheight=0.1, anchor="center")
 
-        self.file_listbox = tk.Listbox(self, selectmode=tk.MULTIPLE)
-        self.file_listbox.place(relx=0.5, rely=0.5, relheight=0.5, relwidth=0.3, anchor="center")
+        self.online_search = tk.StringVar()
 
-        self.upload_button = tk.Button(self, text="Upload File", font=("", 5), bg=header_color, fg='white',
-                                       activebackground=header_shadow_color, activeforeground='white',
-                                       command=self.upload_file)
-        self.upload_button.place(relx=0.4, rely=0.8, relwidth=0.09, anchor="center")
+        label_online_search = tk.Label(self, text="Search", font=("", 8), bg='white')
+        label_online_search.place(relx=0.1, rely=0.25, relheight=0.1, relwidth=0.2, anchor="center")
+        self.online_search_entry = tk.Entry(self, textvariable=self.online_search, font=("", 8))
+        self.online_search_entry.place(relx=0.23, rely=0.25, relheight=0.05, relwidth=0.15, anchor="center")
+
+        self.online_search_button = tk.Button(self, image=self.search_icon,  bg=header_color,
+                                              activebackground=header_shadow_color)
+        self.online_search_button.place(relx=0.33, rely=0.25, relwidth=0.035, relheight=0.05, anchor="center")
+
+        self.online_files = []
+
+        self.file_online_listbox = tk.Listbox(self, selectmode=tk.MULTIPLE)
+        self.file_online_listbox.place(relx=0.2, rely=0.55, relheight=0.5, relwidth=0.3, anchor="center")
 
         self.download_button = tk.Button(self, text="Download", font=("", 5), bg=header_color, fg='white',
                                          activebackground=header_shadow_color, activeforeground='white',
                                          command=self.download_files)
-        self.download_button.place(relx=0.5, rely=0.8, relwidth=0.09, anchor="center")
+        self.download_button.place(relx=0.2, rely=0.85, relwidth=0.29, anchor="center")
+
+        label_uploaded = tk.Label(self, text="Uploaded files", bg='white', font=("", 10))
+        label_uploaded.place(relx=0.55, rely=0.15, relwidth=0.25, relheight=0.1, anchor="center")
+
+        self.offline_search = tk.StringVar()
+
+        label_offline_search = tk.Label(self, text="Search", font=("", 8), bg='white')
+        label_offline_search.place(relx=0.45, rely=0.25, relheight=0.1, relwidth=0.2, anchor="center")
+        self.offline_search_entry = tk.Entry(self, textvariable=self.offline_search, font=("", 8))
+        self.offline_search_entry.place(relx=0.58, rely=0.25, relheight=0.05, relwidth=0.15, anchor="center")
+
+        self.offline_search_button = tk.Button(self, image=self.search_icon, bg=header_color,
+                                               activebackground=header_shadow_color)
+        self.offline_search_button.place(relx=0.68, rely=0.25, relwidth=0.035, relheight=0.05, anchor="center")
+
+        self.uploaded_files = []
+
+        self.file_listbox = tk.Listbox(self, selectmode=tk.MULTIPLE)
+        self.file_listbox.place(relx=0.55, rely=0.55, relheight=0.5, relwidth=0.3, anchor="center")
+
+        self.upload_button = tk.Button(self, text="Upload File", font=("", 5), bg=header_color, fg='white',
+                                       activebackground=header_shadow_color, activeforeground='white',
+                                       command=self.upload_file)
+        self.upload_button.place(relx=0.45, rely=0.85, relwidth=0.09, anchor="center")
+
+        self.download_button = tk.Button(self, text="Download", font=("", 5), bg=header_color, fg='white',
+                                         activebackground=header_shadow_color, activeforeground='white',
+                                         command=self.download_files)
+        self.download_button.place(relx=0.55, rely=0.85, relwidth=0.09, anchor="center")
 
         self.delete_button = tk.Button(self, text="Delete", font=("", 5), bg=header_color, fg='white',
                                        activebackground=header_shadow_color, activeforeground='white',
                                        command=self.delete_files)
-        self.delete_button.place(relx=0.6, rely=0.8, relwidth=0.09, anchor="center")
+        self.delete_button.place(relx=0.65, rely=0.85, relwidth=0.09, anchor="center")
 
     def logout(self):
         self.controller.show_frame(WelcomePage)
@@ -387,7 +435,6 @@ class ProfilePage(tk.Frame):
             print("Error executing script:", e)
         self.controller.show_frame(WelcomePage)
         self.controller.username.set("")
-
 
     def upload_file(self):
         file_path = filedialog.askopenfilename()

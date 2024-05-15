@@ -1,0 +1,33 @@
+option may begin on any octet boundary.  There are two
+    cases for the format of an option:
+
+      Case 1:  A single octet of option-kind.
+
+      Case 2:  An octet of option-kind, an octet of option-length, and
+               the actual option-data octets.
+
+    The option-length counts the two octets of option-kind and
+    option-length as well as the option-data octets.
+
+    Note that the list of options may be shorter than the data offset
+    field might imply.  The content of the header beyond the
+    End-of-Option option must be header padding (i.e., zero).
+
+    A TCP must implement all options.
+
+
+                                                               [Page 17]
+
+
+                                                          September 1981
+Transmission Control Protocol
+Functional Specification
+
+
+
+    Currently defined options include (kind indicated in octal):
+
+      Kind     Length    Meaning
+      ----     ------    -------
+       0         -       End of option list.
+       1         -       No-O

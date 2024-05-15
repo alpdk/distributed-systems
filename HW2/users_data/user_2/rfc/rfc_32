@@ -1,0 +1,24 @@
+processes
+  may "own" ports, and that processes can initiate connections only on
+  the ports they own.  (Means for implementing ownership is a local
+  issue, but we envision a Request Port user command, or a method of
+  uniquely allocating a group of ports to a given process, e.g., by
+  associating the high order bits of a port name with a given process.)
+
+  A connection is specified in the OPEN call by the local port and
+  foreign socket arguments.  In return, the TCP supplies a (short) local
+
+
+[Page 10]                                                               
+
+
+September 1981                                                          
+                                           Transmission Control Protocol
+                                                              Philosophy
+
+
+
+  connection name by which the user refers to the connection in
+  subsequent calls.  There are several things that must be remembered
+  about a connection.  To store this information we imagine that there
+  is a data structur

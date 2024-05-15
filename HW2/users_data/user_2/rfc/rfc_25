@@ -1,0 +1,21 @@
+   a socket.  A pair of sockets uniquely identifies each connection.
+    That is, a socket may be simultaneously used in multiple
+    connections.
+
+    The binding of ports to processes is handled independently by each
+    Host.  However, it proves useful to attach frequently used processes
+    (e.g., a "logger" or timesharing service) to fixed sockets which are
+    made known to the public.  These services can then be accessed
+    through the known addresses.  Establishing and learning the port
+    addresses of other processes may involve more dynamic mechanisms.
+
+  Connections:
+
+    The reliability and flow control mechanisms described above require
+    that TCPs initialize and maintain certain status information for
+    each data stream.  The combination of this information, including
+    sockets, sequence numbers, and window sizes, is called a connection.
+    Each connection is uniquely specified by a pair of sockets
+    identifying its two sides.
+
+    When two processes wish to communicate, their TCP's m

@@ -1,0 +1,32 @@
+-----+--------+---------+--------+
+        |00000010|00000100|   max seg size   |
+        +--------+--------+---------+--------+
+         Kind=2   Length=4
+
+
+
+
+
+
+[Page 18]                                                               
+
+
+September 1981                                                          
+                                           Transmission Control Protocol
+                                                Functional Specification
+
+
+
+        Maximum Segment Size Option Data:  16 bits
+
+          If this option is present, then it communicates the maximum
+          receive segment size at the TCP which sends this segment.
+          This field must only be sent in the initial connection request
+          (i.e., in segments with the SYN control bit set).  If this
+          option is not used, any segment size is allowed.
+
+  Padding:  variable
+
+    The TCP header padding is used to ensure that the TCP header ends
+    and data begins on a 32 bit boundary.  The padding is composed of
+    zeros.

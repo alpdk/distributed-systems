@@ -1,0 +1,29 @@
+  (??)    <-- <SEQ=300><ACK=100><DATA=10><CTL=ACK> <-- ESTABLISHED
+
+  3.          --> <SEQ=100><CTL=RST>                   --> (ABORT!!)
+
+           Active Side Causes Half-Open Connection Discovery
+
+                               Figure 11.
+
+  In figure 12, we find the two TCPs A and B with passive connections
+  waiting for SYN.  An old duplicate arriving at TCP B (line 2) stirs B
+  into action.  A SYN-ACK is returned (line 3) and causes TCP A to
+  generate a RST (the ACK in line 3 is not acceptable).  TCP B accepts
+  the reset and returns to its passive LISTEN state.
+
+  
+
+      TCP A                                         TCP B
+
+  1.  LISTEN                                        LISTEN
+
+  2.       ... <SEQ=Z><CTL=SYN>                -->  SYN-RECEIVED
+
+  3.  (??) <-- <SEQ=X><ACK=Z+1><CTL=SYN,ACK>   <--  SYN-RECEIVED
+
+  4.       --> <SEQ=Z+1><CTL=RST>              -->  (return to LISTEN!)
+
+  5.  LISTEN                                        LISTEN
+
+       Old Duplicate SYN Initiates a Reset on two Passive S

@@ -1,0 +1,19 @@
+onsecutive sequence numbers
+    as there are octets of data in the segment.
+
+    Under normal conditions, TCPs keep track of the next sequence number
+    to emit and the oldest awaiting acknowledgment so as to avoid
+    mistakenly using a sequence number over before its first use has
+    been acknowledged.  This alone does not guarantee that old duplicate
+    data is drained from the net, so the sequence space has been made
+    very large to reduce the probability that a wandering duplicate will
+    cause trouble upon arrival.  At 2 megabits/sec. it takes 4.5 hours
+    to use up 2**32 octets of sequence space.  Since the maximum segment
+    lifetime in the net is not likely to exceed a few tens of seconds,
+    this is deemed ample protection for foreseeable nets, even if data
+    rates escalate to l0's of megabits/sec.  At 100 megabits/sec, the
+    cycle time is 5.4 minutes which may be a little short, but still
+    within reason.
+
+    The basic duplicate detection and sequencing algorithm in TCP can be
+    d

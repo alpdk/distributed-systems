@@ -1,0 +1,26 @@
+                          Transmission Control Protocol
+                                                Functional Specification
+
+
+
+  acknowledgment it advances SND.UNA.  The extent to which the values of
+  these variables differ is a measure of the delay in the communication.
+  The amount by which the variables are advanced is the length of the
+  data in the segment.  Note that once in the ESTABLISHED state all
+  segments must carry current acknowledgment information.
+
+  The CLOSE user call implies a push function, as does the FIN control
+  flag in an incoming segment.
+
+  Retransmission Timeout
+
+  Because of the variability of the networks that compose an
+  internetwork system and the wide range of uses of TCP connections the
+  retransmission timeout must be dynamically determined.  One procedure
+  for determining a retransmission time out is given here as an
+  illustration.
+
+    An Example Retransmission Timeout Procedure
+
+      Measure the elapsed time between sending a data octet with a
+      particular s

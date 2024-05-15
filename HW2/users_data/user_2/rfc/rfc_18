@@ -1,0 +1,33 @@
+CK
+
+          The precedence in the segment must match the precedence in the
+          TCB, if not, send a reset
+
+            <SEQ=SEG.ACK><CTL=RST>
+
+        If there is no ACK
+
+          If the precedence in the segment is higher than the precedence
+          in the TCB then if allowed by the user and the system raise
+          the precedence in the TCB to that in the segment, if not
+          allowed to raise the prec then send a reset.
+
+            <SEQ=0><ACK=SEG.SEQ+SEG.LEN><CTL=RST,ACK>
+
+          If the precedence in the segment is lower than the precedence
+          in the TCB continue.
+
+        If a reset was sent, discard the segment and return.
+
+      fourth check the SYN bit
+
+        This step should be reached only if the ACK is ok, or there is
+        no ACK, and it the segment did not contain a RST.
+
+        If the SYN bit is on and the security/compartment and precedence
+
+
+                                                               [Page 67]
+
+
+                                              

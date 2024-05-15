@@ -1,0 +1,41 @@
+f data, in particular an internet
+          fragment is a portion of an internet datagram.
+
+FTP
+          A file transfer protocol.
+
+
+
+
+
+                                                               [Page 79]
+
+
+                                                          September 1981
+Transmission Control Protocol
+Glossary
+
+
+
+header
+          Control information at the beginning of a message, segment,
+          fragment, packet or block of data.
+
+host
+          A computer.  In particular a source or destination of messages
+          from the point of view of the communication network.
+
+Identification
+          An Internet Protocol field.  This identifying value assigned
+          by the sender aids in assembling the fragments of a datagram.
+
+IMP
+          The Interface Message Processor, the packet switch of the
+          ARPANET.
+
+internet address
+          A source or destination address specific to the host level.
+
+internet datagram
+          The unit of data exchanged between an internet module and the
+  

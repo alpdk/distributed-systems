@@ -1,0 +1,30 @@
+   SEND Call
+
+
+
+  SEND Call
+
+    CLOSED STATE (i.e., TCB does not exist)
+
+      If the user does not have access to such a connection, then return
+      "error:  connection illegal for this process".
+
+      Otherwise, return "error:  connection does not exist".
+
+    LISTEN STATE
+
+      If the foreign socket is specified, then change the connection
+      from passive to active, select an ISS.  Send a SYN segment, set
+      SND.UNA to ISS, SND.NXT to ISS+1.  Enter SYN-SENT state.  Data
+      associated with SEND may be sent with SYN segment or queued for
+      transmission after entering ESTABLISHED state.  The urgent bit if
+      requested in the command must be sent with the data segments sent
+      as a result of this command.  If there is no room to queue the
+      request, respond with "error:  insufficient resources".  If
+      Foreign socket was not specified, then return "error:  foreign
+      socket unspecified".
+
+    SYN-SENT STATE
+    SYN-RECEIVED STATE
+
+      Queue the data for transmission after en

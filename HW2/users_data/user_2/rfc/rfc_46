@@ -1,0 +1,24 @@
+ation
+  and compartmentation of the TCP segments, so this information can be
+  communicated end-to-end across multiple networks.
+
+                           Protocol Layering
+
+                        +---------------------+
+                        |     higher-level    |
+                        +---------------------+
+                        |        TCP          |
+                        +---------------------+
+                        |  internet protocol  |
+                        +---------------------+
+                        |communication network|
+                        +---------------------+
+
+                                Figure 1
+
+  Much of this document is written in the context of TCP implementations
+  which are co-resident with higher level protocols in the host
+  computer.  Some computer systems will be connected to networks via
+  front-end computers which house the TCP and internet protocol layers,
+  as well as network specific software.  The TCP specification describes
+  an interface to the 

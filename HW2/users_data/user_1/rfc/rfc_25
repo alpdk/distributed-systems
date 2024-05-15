@@ -1,0 +1,32 @@
+              |                                     
+              +---------------------------+                      
+              |   Local Network Protocol  |    Network Level     
+              +---------------------------+                      
+
+                         Protocol Relationships
+
+                               Figure 2.
+
+  It is expected that the TCP will be able to support higher level
+  protocols efficiently.  It should be easy to interface higher level
+  protocols like the ARPANET Telnet or AUTODIN II THP to the TCP.
+
+2.6.  Reliable Communication
+
+  A stream of data sent on a TCP connection is delivered reliably and in
+  order at the destination.
+
+
+
+                                                                [Page 9]
+
+
+                                                          September 1981
+Transmission Control Protocol
+Philosophy
+
+
+
+  Transmission is made reliable via the use of sequence numbers and
+  acknowledgments.  Conceptually, each octet of data is assigned a
+  sequence numb

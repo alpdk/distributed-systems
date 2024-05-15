@@ -1,0 +1,24 @@
+e a
+  wide spectrum of communication systems ranging from hard-wired
+  connections to packet-switched or circuit-switched networks.
+
+
+                                                                [Page 1]
+
+
+                                                          September 1981
+Transmission Control Protocol
+Introduction
+
+
+
+  TCP is based on concepts first described by Cerf and Kahn in [1].  The
+  TCP fits into a layered protocol architecture just above a basic
+  Internet Protocol [2] which provides a way for the TCP to send and
+  receive variable-length segments of information enclosed in internet
+  datagram "envelopes".  The internet datagram provides a means for
+  addressing source and destination TCPs in different networks.  The
+  internet protocol also deals with any fragmentation or reassembly of
+  the TCP segments required to achieve transport and delivery through
+  multiple networks and interconnecting gateways.  The internet protocol
+  also carries information on the precedence, security classific

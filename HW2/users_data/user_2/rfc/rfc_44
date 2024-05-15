@@ -1,0 +1,73 @@
+ocol
+
+
+
+                                PREFACE
+
+
+
+This document describes the DoD Standard Transmission Control Protocol
+(TCP).  There have been nine earlier editions of the ARPA TCP
+specification on which this standard is based, and the present text
+draws heavily from them.  There have been many contributors to this work
+both in terms of concepts and in terms of text.  This edition clarifies
+several details and removes the end-of-letter buffer-size adjustments,
+and redescribes the letter mechanism as a push function.
+
+                                                           Jon Postel
+
+                                                           Editor
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                              [Page iii]
+
+
+
+
+RFC:  793
+Replaces: RFC 761
+IENs:  129, 124, 112, 81,
+55, 44, 40, 27, 21, 5
+
+                     TRANSMISSION CONTROL PROTOCOL
+
+                         DARPA INTERNET PROGRAM
+                         PROTOCOL SPECIFICATION
+
+
+
+                  

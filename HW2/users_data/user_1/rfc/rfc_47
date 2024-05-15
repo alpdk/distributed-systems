@@ -1,0 +1,41 @@
+ 
+
+                          Send Sequence Space
+
+                               Figure 4.
+    
+    
+
+  The send window is the portion of the sequence space labeled 3 in
+  figure 4.
+
+  Receive Sequence Space
+
+                       1          2          3      
+                   ----------|----------|---------- 
+                          RCV.NXT    RCV.NXT        
+                                    +RCV.WND        
+
+        1 - old sequence numbers which have been acknowledged  
+        2 - sequence numbers allowed for new reception         
+        3 - future sequence numbers which are not yet allowed  
+
+                         Receive Sequence Space
+
+                               Figure 5.
+    
+    
+
+  The receive window is the portion of the sequence space labeled 2 in
+  figure 5.
+
+  There are also some variables used frequently in the discussion that
+  take their values from the fields of the current segment.
+
+
+
+
+[Page 20]                                                               
+
+
+September 198

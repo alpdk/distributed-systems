@@ -1,0 +1,27 @@
+1                                                          
+                                           Transmission Control Protocol
+                                                Functional Specification
+
+
+
+    Current Segment Variables
+
+      SEG.SEQ - segment sequence number
+      SEG.ACK - segment acknowledgment number
+      SEG.LEN - segment length
+      SEG.WND - segment window
+      SEG.UP  - segment urgent pointer
+      SEG.PRC - segment precedence value
+
+  A connection progresses through a series of states during its
+  lifetime.  The states are:  LISTEN, SYN-SENT, SYN-RECEIVED,
+  ESTABLISHED, FIN-WAIT-1, FIN-WAIT-2, CLOSE-WAIT, CLOSING, LAST-ACK,
+  TIME-WAIT, and the fictional state CLOSED.  CLOSED is fictional
+  because it represents the state when there is no TCB, and therefore,
+  no connection.  Briefly the meanings of the states are:
+
+    LISTEN - represents waiting for a connection request from any remote
+    TCP and port.
+
+    SYN-SENT - represents waiting for a matching connection request
+   

@@ -1,0 +1,19 @@
+ect data from the sending user and to
+  send that data in segments at its own convenience, until the push
+  function is signaled, then it must send all unsent data.  When a
+  receiving TCP sees the PUSH flag, it must not wait for more data from
+  the sending TCP before passing the data to the receiving process.
+
+  There is no necessary relationship between push functions and segment
+  boundaries.  The data in any particular segment may be the result of a
+  single SEND call, in whole or part, or of multiple SEND calls.
+
+  The purpose of push function and the PUSH flag is to push data through
+  from the sending user to the receiving user.  It does not provide a
+  record service.
+
+  There is a coupling between the push function and the use of buffers
+  of data that cross the TCP/user interface.  Each time a PUSH flag is
+  associated with data placed into the receiving user's buffer, the
+  buffer is returned to the user for processing even if the buffer is
+  not filled.  If data arrives that fills the user's buff

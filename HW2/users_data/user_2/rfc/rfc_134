@@ -1,0 +1,31 @@
+ number in the sequence field of the arriving segment.
+
+send sequence
+          This is the next sequence number the local (sending) TCP will
+          use on the connection.  It is initially selected from an
+          initial sequence number curve (ISN) and is incremented for
+          each octet of data or sequenced control transmitted.
+
+send window
+          This represents the sequence numbers which the remote
+          (receiving) TCP is willing to receive.  It is the value of the
+          window field specified in segments from the remote (data
+          receiving) TCP.  The range of new sequence numbers which may
+          be emitted by a TCP lies between SND.NXT and
+          SND.UNA + SND.WND - 1. (Retransmissions of sequence numbers
+          between SND.UNA and SND.NXT are expected, of course.)
+
+SND.NXT
+          send sequence
+
+SND.UNA
+          left sequence
+
+SND.UP
+          send urgent pointer
+
+SND.WL1
+          segment sequence number at last window update
+
+SND.WL2
+          segment acknowledg

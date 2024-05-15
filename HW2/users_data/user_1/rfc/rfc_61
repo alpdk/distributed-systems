@@ -1,0 +1,22 @@
+
+                                                Functional Specification
+
+
+
+  Initial Sequence Number Selection
+
+  The protocol places no restriction on a particular connection being
+  used over and over again.  A connection is defined by a pair of
+  sockets.  New instances of a connection will be referred to as
+  incarnations of the connection.  The problem that arises from this is
+  -- "how does the TCP identify duplicate segments from previous
+  incarnations of the connection?"  This problem becomes apparent if the
+  connection is being opened and closed in quick succession, or if the
+  connection breaks with loss of memory and is then reestablished.
+
+  To avoid confusion we must prevent segments from one incarnation of a
+  connection from being used while the same sequence numbers may still
+  be present in the network from an earlier incarnation.  We want to
+  assure this, even if a TCP crashes and loses all knowledge of the
+  sequence numbers it has been using.  When new connections are created,
+  an in

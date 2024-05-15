@@ -1,0 +1,26 @@
+ment, a minimum functionality is required at the TCP/user
+  interface for any valid implementation.
+
+  The interface between TCP and lower level protocol is essentially
+  unspecified except that it is assumed there is a mechanism whereby the
+  two levels can asynchronously pass information to each other.
+  Typically, one expects the lower level protocol to specify this
+  interface.  TCP is designed to work in a very general environment of
+  interconnected networks.  The lower level protocol which is assumed
+  throughout this document is the Internet Protocol [2].
+
+1.5.  Operation
+
+  As noted above, the primary purpose of the TCP is to provide reliable,
+  securable logical circuit or connection service between pairs of
+  processes.  To provide this service on top of a less reliable internet
+  communication system requires facilities in the following areas:
+
+    Basic Data Transfer
+    Reliability
+    Flow Control
+    Multiplexing
+    Connections
+    Precedence and Security
+
+  The basic operation of the TCP in 

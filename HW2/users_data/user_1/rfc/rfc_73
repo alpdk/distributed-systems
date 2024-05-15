@@ -1,0 +1,21 @@
+hake is shown in figure 7 below.  The
+  figures should be interpreted in the following way.  Each line is
+  numbered for reference purposes.  Right arrows (-->) indicate
+  departure of a TCP segment from TCP A to TCP B, or arrival of a
+  segment at B from A.  Left arrows (<--), indicate the reverse.
+  Ellipsis (...) indicates a segment which is still in the network
+  (delayed).  An "XXX" indicates a segment which is lost or rejected.
+  Comments appear in parentheses.  TCP states represent the state AFTER
+  the departure or arrival of the segment (whose contents are shown in
+  the center of each line).  Segment contents are shown in abbreviated
+  form, with sequence number, control flags, and ACK field.  Other
+  fields such as window, addresses, lengths, and text have been left out
+  in the interest of clarity.
+
+  
+
+      TCP A                                                TCP B
+
+  1.  CLOSED                                               LISTEN
+
+  2.  SYN-SENT    --> <SEQ=100><CTL=SYN>               --> SYN-R

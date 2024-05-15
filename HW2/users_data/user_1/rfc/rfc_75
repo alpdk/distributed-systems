@@ -1,0 +1,36 @@
+                                                               [Page 31]
+
+
+                                                          September 1981
+Transmission Control Protocol
+Functional Specification
+
+
+
+  Simultaneous initiation is only slightly more complex, as is shown in
+  figure 8.  Each TCP cycles from CLOSED to SYN-SENT to SYN-RECEIVED to
+  ESTABLISHED.
+
+  
+
+      TCP A                                            TCP B
+
+  1.  CLOSED                                           CLOSED
+
+  2.  SYN-SENT     --> <SEQ=100><CTL=SYN>              ...
+
+  3.  SYN-RECEIVED <-- <SEQ=300><CTL=SYN>              <-- SYN-SENT
+
+  4.               ... <SEQ=100><CTL=SYN>              --> SYN-RECEIVED
+
+  5.  SYN-RECEIVED --> <SEQ=100><ACK=301><CTL=SYN,ACK> ...
+
+  6.  ESTABLISHED  <-- <SEQ=300><ACK=101><CTL=SYN,ACK> <-- SYN-RECEIVED
+
+  7.               ... <SEQ=101><ACK=301><CTL=ACK>     --> ESTABLISHED
+
+                Simultaneous Connection Synchronization
+
+                               Figure 8.
+
+  The principle reason

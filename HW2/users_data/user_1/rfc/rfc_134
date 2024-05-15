@@ -1,0 +1,78 @@
+n Control Protocol
+                                                Functional Specification
+CLOSE Call
+
+
+
+    CLOSE-WAIT STATE
+
+      Queue this request until all preceding SENDs have been
+      segmentized; then send a FIN segment, enter CLOSING state.
+
+    CLOSING STATE
+    LAST-ACK STATE
+    TIME-WAIT STATE
+
+      Respond with "error:  connection closing".
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                               [Page 61]
+
+
+                                                          September 1981
+Transmission Control Protocol
+Functional Specification
+                                                              ABORT Call
+
+
+
+  ABORT Call
+
+    CLOSED STATE (i.e., TCB does not exist)
+
+      If the user should not have access to such a connection, return
+      "error:  connection illegal for this process".
+
+      Otherwise return "error:  connection does not exist".
+
+    LISTEN STATE
+
+      Any outstanding RECEIVEs should be returned with "error:
+      connection r

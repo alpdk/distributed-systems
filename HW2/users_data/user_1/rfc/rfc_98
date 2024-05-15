@@ -1,0 +1,21 @@
+indication the user must also send at least one data
+  octet.  If the sending user also indicates a push, timely delivery of
+  the urgent information to the destination process is enhanced.
+
+  Managing the Window
+
+  The window sent in each segment indicates the range of sequence
+  numbers the sender of the window (the data receiver) is currently
+  prepared to accept.  There is an assumption that this is related to
+  the currently available data buffer space available for this
+  connection.
+
+  Indicating a large window encourages transmissions.  If more data
+  arrives than can be accepted, it will be discarded.  This will result
+  in excessive retransmissions, adding unnecessarily to the load on the
+  network and the TCPs.  Indicating a small window may restrict the
+  transmission of data to the point of introducing a round trip delay
+  between each new segment transmitted.
+
+  The mechanisms provided allow a TCP to advertise a large window and to
+  subsequently advertise a much smaller window without having ac

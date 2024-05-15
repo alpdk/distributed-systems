@@ -1,0 +1,25 @@
+                           [Page 53]
+
+
+                                                          September 1981
+Transmission Control Protocol
+Functional Specification
+                                                               OPEN Call
+
+
+
+  OPEN Call
+
+    CLOSED STATE (i.e., TCB does not exist)
+
+      Create a new transmission control block (TCB) to hold connection
+      state information.  Fill in local socket identifier, foreign
+      socket, precedence, security/compartment, and user timeout
+      information.  Note that some parts of the foreign socket may be
+      unspecified in a passive OPEN and are to be filled in by the
+      parameters of the incoming SYN segment.  Verify the security and
+      precedence requested are allowed for this user, if not return
+      "error:  precedence not allowed" or "error:  security/compartment
+      not allowed."  If passive enter the LISTEN state and return.  If
+      active and the foreign socket is unspecified, return "error:
+      foreign socket unspecified"
