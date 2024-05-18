@@ -60,8 +60,8 @@ class AP2P(tk.Tk):
         submenu1 = AuthSidebarSubMenu(self.submenu_frame,
                                       sub_menu_heading='User Authorization',
                                       sub_menu_options=["Login",
-                                                    "Register",
-                                                    ]
+                                                        "Register",
+                                                        ]
                                       )
         submenu1.options["Login"].config(
             command=lambda: self.show_frame(LoginPage)
@@ -370,14 +370,18 @@ class ProfilePage(tk.Frame):
         self.online_search_entry = tk.Entry(self, textvariable=self.online_search, font=("", 8))
         self.online_search_entry.place(relx=0.23, rely=0.25, relheight=0.05, relwidth=0.15, anchor="center")
 
-        self.online_search_button = tk.Button(self, image=self.search_icon,  bg=header_color,
-                                              activebackground=header_shadow_color)
+        self.online_search_button = tk.Button(self, image=self.search_icon, bg=header_color,
+                                              activebackground=header_shadow_color,
+                                              command=self.update_file_online_listbox_filtered)
         self.online_search_button.place(relx=0.33, rely=0.25, relwidth=0.035, relheight=0.05, anchor="center")
 
         self.online_files = []
 
         self.file_online_listbox = tk.Listbox(self, selectmode=tk.MULTIPLE)
         self.file_online_listbox.place(relx=0.2, rely=0.55, relheight=0.5, relwidth=0.3, anchor="center")
+
+        self.list_files_online()
+        self.update_file_online_listbox()
 
         self.download_button = tk.Button(self, text="Download", font=("", 5), bg=header_color, fg='white',
                                          activebackground=header_shadow_color, activeforeground='white',
@@ -395,7 +399,8 @@ class ProfilePage(tk.Frame):
         self.offline_search_entry.place(relx=0.58, rely=0.25, relheight=0.05, relwidth=0.15, anchor="center")
 
         self.offline_search_button = tk.Button(self, image=self.search_icon, bg=header_color,
-                                               activebackground=header_shadow_color)
+                                               activebackground=header_shadow_color,
+                                               command=self.update_file_listbox_filtered)
         self.offline_search_button.place(relx=0.68, rely=0.25, relwidth=0.035, relheight=0.05, anchor="center")
 
         self.uploaded_files = []
@@ -461,6 +466,12 @@ class ProfilePage(tk.Frame):
         for file_path in self.uploaded_files:
             self.file_listbox.insert(tk.END, file_path)
 
+    def update_file_online_listbox(self):
+        self.list_files_online()
+        self.file_online_listbox.delete(0, tk.END)
+        for file_path in self.online_files:
+            self.file_online_listbox.insert(tk.END, file_path)
+
     def download_files(self):
         selected_indices = self.file_listbox.curselection()
         if not selected_indices:
@@ -492,6 +503,39 @@ class ProfilePage(tk.Frame):
             del self.uploaded_files[index]
 
         self.update_file_listbox()
+
+    def list_files_online(self):
+        files = {}
+        files_path = os.path.join(self.controller.path_to_dir, "users_data")
+        users = os.listdir(files_path)
+        if "port_to_hosts.json" in users:
+            users.remove("port_to_hosts.json")
+        for user in users:
+            user_data_path = os.path.join(files_path, user)
+            user_data = os.listdir(user_data_path)
+            if "user_info.json" in user_data:
+                user_data.remove("user_info.json")
+            if "combined_files" in user_data:
+                user_data.remove("combined_files")
+            for file in user_data:
+                if file in files.keys():
+                    files[file].append(user)
+                else:
+                    files[file] = [user]
+        self.online_files = files.keys()
+
+    def update_file_listbox_filtered(self):
+        self.file_listbox.delete(0, tk.END)
+        for file_path in self.uploaded_files:
+            if self.offline_search.get() in file_path:
+                self.file_listbox.insert(tk.END, file_path)
+
+    def update_file_online_listbox_filtered(self):
+        self.list_files_online()
+        self.file_online_listbox.delete(0, tk.END)
+        for file_path in self.online_files:
+            if self.online_search.get() in file_path:
+                self.file_online_listbox.insert(tk.END, file_path)
 
 
 class AuthSidebarSubMenu(tk.Frame):
