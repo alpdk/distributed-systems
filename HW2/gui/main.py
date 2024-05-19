@@ -1,10 +1,20 @@
 import os
+import sys
 import pathlib
 import subprocess
 import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
 
-from HW2.file_management.getting_specific_user_info import get_user_info
+path_to_proj_dir = pathlib.Path().resolve().parent
+
+path_to_file_management = os.path.join(path_to_proj_dir, "file_management")
+sys.path.insert(1, str(path_to_file_management))
+
+path_to_network = os.path.join(path_to_proj_dir, "network")
+sys.path.insert(2, str(path_to_network))
+
+from getting_specific_user_info import get_user_info
+from peer import Peer
 
 sidebar_color = '#263238'
 header_color = '#62A8EA'
@@ -159,13 +169,10 @@ class LoginPage(tk.Frame):
 
     def login_success(self, username):
         self.controller.username.set(username)
-        path_to_user_data = str(os.path.join(self.controller.path_to_dir, "users_data", username))
-        user_data = os.listdir(path_to_user_data)
-        if "combined_files" in user_data:
-            user_data.remove("combined_files")
-        user_data.remove("user_info.json")
-        self.controller.frames[ProfilePage].uploaded_files = user_data
-        self.controller.frames[ProfilePage].update_file_listbox()
+        self.controller.frames[ProfilePage].peer = Peer(username)
+        self.controller.frames[ProfilePage].peer.start()
+        self.controller.frames[ProfilePage].update_file_listbox_filtered()
+        self.controller.frames[ProfilePage].update_file_online_listbox_filtered()
         self.controller.show_frame(ProfilePage)
 
     def password_not_recognised(self):
@@ -339,6 +346,7 @@ class ProfilePage(tk.Frame):
     def __init__(self, parent, controller):
         self.parent = parent
         self.controller = controller
+        self.peer = None
 
         tk.Frame.__init__(self, parent)
 
@@ -376,6 +384,7 @@ class ProfilePage(tk.Frame):
         self.online_search_button.place(relx=0.33, rely=0.25, relwidth=0.035, relheight=0.05, anchor="center")
 
         self.online_files = []
+        self.online_files_filtered = []
 
         self.file_online_listbox = tk.Listbox(self, selectmode=tk.MULTIPLE)
         self.file_online_listbox.place(relx=0.2, rely=0.55, relheight=0.5, relwidth=0.3, anchor="center")
@@ -404,6 +413,7 @@ class ProfilePage(tk.Frame):
         self.offline_search_button.place(relx=0.68, rely=0.25, relwidth=0.035, relheight=0.05, anchor="center")
 
         self.uploaded_files = []
+        self.uploaded_files_filtered = []
 
         self.file_listbox = tk.Listbox(self, selectmode=tk.MULTIPLE)
         self.file_listbox.place(relx=0.55, rely=0.55, relheight=0.5, relwidth=0.3, anchor="center")
@@ -411,17 +421,12 @@ class ProfilePage(tk.Frame):
         self.upload_button = tk.Button(self, text="Upload File", font=("", 5), bg=header_color, fg='white',
                                        activebackground=header_shadow_color, activeforeground='white',
                                        command=self.upload_file)
-        self.upload_button.place(relx=0.45, rely=0.85, relwidth=0.09, anchor="center")
-
-        self.download_button = tk.Button(self, text="Download", font=("", 5), bg=header_color, fg='white',
-                                         activebackground=header_shadow_color, activeforeground='white',
-                                         command=self.download_files)
-        self.download_button.place(relx=0.55, rely=0.85, relwidth=0.09, anchor="center")
+        self.upload_button.place(relx=0.48, rely=0.85, relwidth=0.14, anchor="center")
 
         self.delete_button = tk.Button(self, text="Delete", font=("", 5), bg=header_color, fg='white',
                                        activebackground=header_shadow_color, activeforeground='white',
                                        command=self.delete_files)
-        self.delete_button.place(relx=0.65, rely=0.85, relwidth=0.09, anchor="center")
+        self.delete_button.place(relx=0.62, rely=0.85, relwidth=0.14, anchor="center")
 
     def logout(self):
         self.controller.show_frame(WelcomePage)
@@ -449,7 +454,6 @@ class ProfilePage(tk.Frame):
                 messagebox.showinfo("Error", "File already uploaded.")
                 return
             self.uploaded_files.append(filename)
-            self.update_file_listbox()
             try:
                 script_path = os.path.join(self.controller.path_to_dir, "file_management", "add_file.py")
                 script_args = [self.controller.username.get(), filename, file_path]
@@ -460,8 +464,11 @@ class ProfilePage(tk.Frame):
                 print("Script executed successfully")
             except subprocess.CalledProcessError as e:
                 print("Error executing script:", e)
+            self.update_file_listbox_filtered()
+            self.update_file_online_listbox_filtered()
 
     def update_file_listbox(self):
+        self.list_files_uploaded()
         self.file_listbox.delete(0, tk.END)
         for file_path in self.uploaded_files:
             self.file_listbox.insert(tk.END, file_path)
@@ -473,15 +480,15 @@ class ProfilePage(tk.Frame):
             self.file_online_listbox.insert(tk.END, file_path)
 
     def download_files(self):
-        selected_indices = self.file_listbox.curselection()
+        selected_indices = self.file_online_listbox.curselection()
         if not selected_indices:
             messagebox.showinfo("Error", "No files selected.")
             return
 
         for index in selected_indices:
-            file_path = self.uploaded_files[index]
-            # Implement download functionality here
+            file_path = self.online_files_filtered[index]
             print("Downloading:", file_path)
+            self.peer.get_request(file_path)
 
     def delete_files(self):
         selected_indices = self.file_listbox.curselection()
@@ -492,7 +499,7 @@ class ProfilePage(tk.Frame):
         for index in selected_indices[::-1]:
             try:
                 script_path = os.path.join(self.controller.path_to_dir, "file_management", "delete_file.py")
-                script_args = [self.controller.username.get(), self.uploaded_files[index]]
+                script_args = [self.controller.username.get(), self.uploaded_files_filtered[index]]
                 command = ['python', script_path] + script_args
 
                 # Run the command
@@ -500,9 +507,9 @@ class ProfilePage(tk.Frame):
                 print("Script executed successfully")
             except subprocess.CalledProcessError as e:
                 print("Error executing script:", e)
-            del self.uploaded_files[index]
 
-        self.update_file_listbox()
+        self.update_file_listbox_filtered()
+        self.update_file_online_listbox_filtered()
 
     def list_files_online(self):
         files = {}
@@ -510,6 +517,8 @@ class ProfilePage(tk.Frame):
         users = os.listdir(files_path)
         if "port_to_hosts.json" in users:
             users.remove("port_to_hosts.json")
+        if "free_ports.json" in users:
+            users.remove("free_ports.json")
         for user in users:
             user_data_path = os.path.join(files_path, user)
             user_data = os.listdir(user_data_path)
@@ -524,17 +533,34 @@ class ProfilePage(tk.Frame):
                     files[file] = [user]
         self.online_files = files.keys()
 
+    def list_files_uploaded(self):
+        files = []
+        files_path = os.path.join(self.controller.path_to_dir, "users_data", str(self.controller.username.get()))
+        user_data = os.listdir(files_path)
+        if "combined_files" in user_data:
+            user_data.remove("combined_files")
+        if "user_info.json" in user_data:
+            user_data.remove("user_info.json")
+        for file in user_data:
+            files.append(file)
+        self.uploaded_files = files
+
     def update_file_listbox_filtered(self):
+        self.list_files_uploaded()
         self.file_listbox.delete(0, tk.END)
+        self.uploaded_files_filtered = []
         for file_path in self.uploaded_files:
             if self.offline_search.get() in file_path:
+                self.uploaded_files_filtered.append(file_path)
                 self.file_listbox.insert(tk.END, file_path)
 
     def update_file_online_listbox_filtered(self):
         self.list_files_online()
         self.file_online_listbox.delete(0, tk.END)
+        self.online_files_filtered = []
         for file_path in self.online_files:
             if self.online_search.get() in file_path:
+                self.online_files_filtered.append(file_path)
                 self.file_online_listbox.insert(tk.END, file_path)
 
 

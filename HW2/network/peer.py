@@ -275,7 +275,22 @@ class Peer:
                 with open(path_to_file_info, "w") as json_file:
                     json.dump(data_dict, json_file, indent=4)
 
-    def start(self, input_func=input):
+    def get_request(self, file_name):
+        self.request_file(file_name)
+
+        time.sleep(3)
+
+        users_with_file = self.request_server_sock.recv(1024).decode("utf-8")
+
+        if users_with_file == "No one":
+            print(f"Nobody has file")
+            return
+
+        addresses = self.transpose_string_to_list(users_with_file)
+
+        self.direct_request(addresses, file_name)
+
+    def start(self):
         try:
             self.sock.listen()
 
@@ -286,23 +301,6 @@ class Peer:
             direct_request_threads = threading.Thread(target=self.direct_request_file,
                                                       args=())
             direct_request_threads.start()
-
-            while True:
-                file_name = input_func()
-
-                self.request_file(file_name)
-
-                time.sleep(3)
-
-                users_with_file = self.request_server_sock.recv(1024).decode("utf-8")
-
-                if users_with_file == "No one":
-                    print(f"Nobody has file")
-                    continue
-
-                addresses = self.transpose_string_to_list(users_with_file)
-
-                self.direct_request(addresses, file_name)
         except Exception as e:
             print(f"Error: {e}", end="\n\n")
         finally:
